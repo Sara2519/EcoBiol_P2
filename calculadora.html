@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora — ECOBIOL</title>
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+
+<header class="top">
+  <div class="inner">
+    <h1>Dimensionamiento del sistema de tratamiento de porcinaza</h1>
+    <p>Ingresa los datos de tu granja para calcular el tamaño de cada unidad del sistema. Los valores técnicos ya vienen con los parámetros recomendados — puedes ajustarlos en "opciones avanzadas" si conoces las condiciones reales de tu finca.</p>
+  </div>
+</header>
+
+<nav class="flow-nav"><div class="inner">
+  <button type="button" class="flow-dot general" data-step="sec-escenario" onclick="goToStep('sec-escenario')">1. Escenario</button>
+  <button type="button" class="flow-dot general" data-step="sec-poblacion" onclick="goToStep('sec-poblacion')">2. Población</button>
+  <button type="button" class="flow-dot general" data-step="sec-caudal" onclick="goToStep('sec-caudal')">3. Caudal</button>
+  <button type="button" class="flow-dot liquida" data-step="sec-recepcion" onclick="goToStep('sec-recepcion')">4. Tanque recepción</button>
+  <button type="button" class="flow-dot liquida" data-step="sec-biodigestor" onclick="goToStep('sec-biodigestor')">5. Biodigestor</button>
+  <button type="button" class="flow-dot liquida" data-step="sec-biol" onclick="goToStep('sec-biol')">6. Tanque de biol</button>
+  <button type="button" class="flow-dot liquida" data-step="sec-destino" onclick="goToStep('sec-destino')">7. Destino del biol</button>
+  <button type="button" class="flow-dot solida" data-step="sec-lechos" onclick="goToStep('sec-lechos')">8. Lechos de secado</button>
+  <button type="button" class="flow-dot solida" data-step="sec-marquesina" onclick="goToStep('sec-marquesina')">9. Marquesina</button>
+  <button type="button" class="flow-dot solida" data-step="sec-compost" onclick="goToStep('sec-compost')">10. Compostaje</button>
+</div></nav>
+
+<div class="wrap">
+
+  <!-- 1. ESCENARIO -->
+  <section class="card step" id="sec-escenario">
+    <span class="tag general">Paso 1</span>
+    <h2>Escenario del sistema</h2>
+    <p class="sub">Define si tu sistema separará mecánicamente los sólidos antes del tratamiento.</p>
+    <div class="choice-grid">
+      <label class="choice-card selected" id="cardCS">
+        <input type="radio" name="escenario" value="CS" id="escCS" checked>
+        <span class="badge-check">✓</span>
+        <div class="diagram">
+          <img src="assets/plano-con-separacion.png" alt="Plano del tratamiento con separación de sólidos">
+          <button type="button" class="btn-plano" onclick="event.preventDefault();event.stopPropagation();openLightbox('assets/plano-con-separacion.png','Tratamiento con separación (CS)')">⤢ Ver plano completo</button>
+        </div>
+        <div class="body">
+          <h4>Con separación (CS)</h4>
+          <p>Tienes o planeas instalar un separador sólido-líquido (SEP-01) antes del tanque de recepción. Los sólidos van a marquesina (MS-01) y compostaje (CP-01); el líquido sigue a tanque de recepción (TR-01), lechos de secado (LS-01) y biodigestor (BD-01). Reduce la carga que llega al tratamiento líquido.</p>
+        </div>
+      </label>
+
+      <label class="choice-card" id="cardSS">
+        <input type="radio" name="escenario" value="SS" id="escSS">
+        <span class="badge-check">✓</span>
+        <div class="diagram">
+          <img src="assets/plano-sin-separacion.png" alt="Plano del tratamiento sin separación de sólidos">
+          <button type="button" class="btn-plano" onclick="event.preventDefault();event.stopPropagation();openLightbox('assets/plano-sin-separacion.png','Tratamiento sin separación (SS)')">⤢ Ver plano completo</button>
+        </div>
+        <div class="body">
+          <h4>Sin separación (SS)</h4>
+          <p>Toda la porcinaza va junta al tanque de recepción (TR-01), sin separar sólidos primero. Es más simple de instalar, pero el tanque de recepción y el biodigestor (BD-01) deben manejar un caudal y una carga de sólidos mayores.</p>
+        </div>
+      </label>
+    </div>
+  </section>
+  <section class="card step" id="sec-poblacion">
+    <span class="tag general">Paso 2</span>
+    <h2>Población porcina</h2>
+    <p class="sub">Ingresa el número de animales por grupo. Con esto se calcula el número de cerdos equivalentes (CE), la unidad base de todo el dimensionamiento.</p>
+
+    <h3>Reproductoras</h3>
+    <div class="grid">
+      <div><label for="n_hv">Hembras vacías</label><input type="number" min="0" value="0" id="n_hv"></div>
+      <div><label for="n_hg">Hembras gestantes</label><input type="number" min="0" value="0" id="n_hg"></div>
+      <div><label for="n_hl">Hembras lactantes</label><input type="number" min="0" value="0" id="n_hl"></div>
+      <div><label for="n_mr">Machos reproductores</label><input type="number" min="0" value="0" id="n_mr"></div>
+    </div>
+
+    <h3>Crecimiento y ceba</h3>
+    <div class="grid">
+      <div><label for="n_ll">Lechones lactantes</label><input type="number" min="0" value="0" id="n_ll"></div>
+      <div><label for="n_p">Precebo</label><input type="number" min="0" value="0" id="n_p"></div>
+      <div><label for="n_l">Levante</label><input type="number" min="0" value="0" id="n_l"></div>
+      <div><label for="n_c">Ceba</label><input type="number" min="0" value="100" id="n_c"></div>
+    </div>
+
+    <div class="results">
+      <table><tr><td class="k">Cerdos equivalentes (CE)</td><td class="v" id="out_ce">—</td></tr></table>
+    </div>
+  </section>
+
+  <!-- 3. CAUDAL DE DISEÑO -->
+  <section class="card step" id="sec-caudal">
+    <span class="tag general">Paso 3</span>
+    <h2>Caudal de diseño</h2>
+    <p class="sub">Volumen diario de porcinaza a tratar, calculado a partir del CE y del escenario elegido.</p>
+
+    <div class="results">
+      <table id="tbl_caudal"></table>
+    </div>
+
+    <details class="adv">
+      <summary>Opciones avanzadas — parámetros de caudal</summary>
+      <div class="grid cols-4">
+        <div><label for="p_mexc">Producción excretas (kg/CE·d)</label><input type="number" step="0.01" value="5.01" id="p_mexc"></div>
+        <div><label for="p_rho">Densidad porcinaza (kg/m³)</label><input type="number" step="1" value="1000" id="p_rho"></div>
+        <div><label for="p_qalav">Agua de lavado (L/CE·d)</label><input type="number" step="0.1" value="12" id="p_qalav"></div>
+        <div><label for="p_redlav">Reducción agua lavado en CS (%)</label><input type="number" step="1" value="25" id="p_redlav"></div>
+        <div><label for="p_es_sep">Eficiencia separación L-S (%)</label><input type="number" step="1" value="55" id="p_es_sep"></div>
+        <div><label for="p_fsol">Fracción sólida excretas (%)</label><input type="number" step="1" value="55" id="p_fsol"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 4. TANQUE RECEPCION -->
+  <section class="card step" id="sec-recepcion">
+    <span class="tag liquida">Fracción líquida</span>
+    <h2>Tanque de recepción</h2>
+    <p class="sub">Primera unidad del sistema: amortigua el caudal y sedimenta los sólidos más pesados.</p>
+
+    <div class="results"><table id="tbl_recepcion"></table></div>
+
+    <details class="adv">
+      <summary>Opciones avanzadas — tanque de recepción</summary>
+      <div class="grid cols-4">
+        <div><label for="p_trh">TRH (d)</label><input type="number" step="0.1" value="1" id="p_trh"></div>
+        <div><label for="p_sst_cs">[SST] escenario CS (kg/m³)</label><input type="number" step="0.01" value="6.103" id="p_sst_cs"></div>
+        <div><label for="p_sst_ss">[SST] escenario SS (kg/m³)</label><input type="number" step="0.01" value="2.746" id="p_sst_ss"></div>
+        <div><label for="p_esst">Eficiencia remoción SST (%)</label><input type="number" step="1" value="60" id="p_esst"></div>
+        <div><label for="p_ta">Almacenamiento de lodos (d)</label><input type="number" step="0.5" value="2" id="p_ta"></div>
+        <div><label for="p_rho_lodo">Densidad lodo (kg/m³)</label><input type="number" step="1" value="1030" id="p_rho_lodo"></div>
+        <div><label for="p_cs_lodo">Concentración lodo (%)</label><input type="number" step="0.5" value="5" id="p_cs_lodo"></div>
+        <div><label for="p_ang">Ángulo tolva (°)</label><input type="number" step="1" value="45" id="p_ang"></div>
+        <div><label for="p_bbase">Ancho base tolva (m)</label><input type="number" step="0.05" value="0.20" id="p_bbase"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 5. LECHOS DE SECADO -->
+  <section class="card step" id="sec-lechos">
+    <span class="tag solida">Fracción sólida</span>
+    <h2>Lechos de secado</h2>
+    <p class="sub">Deshidratan los lodos que se acumulan en la tolva del tanque de recepción. Aplica siempre, sin importar el escenario, porque el tanque de recepción sedimenta lodos en ambos casos.</p>
+
+    <div class="results"><table id="tbl_lechos"></table></div>
+
+    <details class="adv">
+      <summary>Opciones avanzadas — lechos de secado</summary>
+      <div class="grid cols-4">
+        <div><label for="p_ts">Tiempo de secado (d)</label><input type="number" step="1" value="18" id="p_ts"></div>
+        <div><label for="p_tl">Tiempo de limpieza (d)</label><input type="number" step="1" value="2" id="p_tl"></div>
+        <div><label for="p_qs">Carga superficial (kg SST/m²·año)</label><input type="number" step="1" value="135" id="p_qs"></div>
+        <div><label for="p_hlecho">Altura medio filtrante (m)</label><input type="number" step="0.05" value="0.60" id="p_hlecho"></div>
+        <div><label for="p_hbl_lecho">Borde libre (m)</label><input type="number" step="0.05" value="0.50" id="p_hbl_lecho"></div>
+        <div><label for="p_hi_lecho">Humedad inicial (%)</label><input type="number" step="1" value="95" id="p_hi_lecho"></div>
+        <div><label for="p_hf_lecho">Humedad final (%)</label><input type="number" step="1" value="50" id="p_hf_lecho"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 6. MARQUESINA -->
+  <section class="card step" id="sec-marquesina">
+    <span class="tag solida">Fracción sólida — solo escenario CS</span>
+    <h2>Marquesina de secado</h2>
+    <p class="sub">Deshidrata la fracción sólida separada mecánicamente antes del tanque de recepción. Solo aplica si elegiste el escenario con separación (CS).</p>
+
+    <div class="results"><table id="tbl_marquesina"></table></div>
+
+    <details class="adv">
+      <summary>Opciones avanzadas — marquesina de secado</summary>
+      <div class="grid cols-4">
+        <div><label for="p_tcd">Ciclo de deshidratación (d)</label><input type="number" step="1" value="10" id="p_tcd"></div>
+        <div><label for="p_hps">Altura capa porcinaza (m)</label><input type="number" step="0.01" value="0.10" id="p_hps"></div>
+        <div><label for="p_hi_mq">Humedad inicial (%)</label><input type="number" step="1" value="80" id="p_hi_mq"></div>
+        <div><label for="p_hf_mq">Humedad final (%)</label><input type="number" step="1" value="50" id="p_hf_mq"></div>
+        <div><label for="p_rhoi">Densidad fracción sólida (kg/m³)</label><input type="number" step="1" value="840" id="p_rhoi"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 7. COMPOSTAJE -->
+  <section class="card step" id="sec-compost">
+    <span class="tag solida">Fracción sólida</span>
+    <h2>Compostaje</h2>
+    <p class="sub">Recibe el lodo deshidratado de los lechos (y de la marquesina, si aplica) y lo mezcla con material rico en carbono.</p>
+
+    <div class="results"><table id="tbl_compost"></table></div>
+
+    <details class="adv">
+      <summary>Opciones avanzadas — compostaje</summary>
+      <div class="grid cols-4">
+        <div><label for="p_rhof">Densidad fracción sólida 50% humedad (kg/m³)</label><input type="number" step="1" value="500" id="p_rhof"></div>
+        <div><label for="p_rhop">Densidad pasto picado (kg/m³)</label><input type="number" step="1" value="500" id="p_rhop"></div>
+        <div><label for="p_rel_cn">Relación porcinaza:material</label><input type="number" step="0.1" value="1" id="p_rel_cn"></div>
+        <div><label for="p_hp">Altura de la pila (m)</label><input type="number" step="0.1" value="1.5" id="p_hp"></div>
+        <div><label for="p_bmax">Ancho máximo de pila (m)</label><input type="number" step="0.1" value="4.0" id="p_bmax"></div>
+        <div><label for="p_tll">Días de llenado por pila (d)</label><input type="number" step="1" value="10" id="p_tll"></div>
+        <div><label for="p_tcc">Ciclo de compostaje (d)</label><input type="number" step="1" value="60" id="p_tcc"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 8. BIODIGESTOR -->
+  <section class="card step" id="sec-biodigestor">
+    <span class="tag liquida">Fracción líquida</span>
+    <h2>Biodigestor tubular</h2>
+    <p class="sub">Estabiliza anaeróbicamente la fracción líquida y produce biogás y biol.</p>
+
+    <div class="results"><table id="tbl_biodigestor"></table></div>
+
+    <details class="adv">
+      <summary>Opciones avanzadas — biodigestor</summary>
+      <div class="grid cols-4">
+        <div><label for="p_trh_bio">TRH (d)</label><input type="number" step="1" value="35" id="p_trh_bio"></div>
+        <div><label for="p_fg">Factor de mayoración biogás</label><input type="number" step="0.01" value="1.15" id="p_fg"></div>
+        <div><label for="p_binf">Ancho inferior zanja (m)</label><input type="number" step="0.1" value="2.0" id="p_binf"></div>
+        <div><label for="p_bsup">Ancho superior zanja (m)</label><input type="number" step="0.1" value="2.5" id="p_bsup"></div>
+        <div><label for="p_hz">Profundidad zanja (m)</label><input type="number" step="0.1" value="1.5" id="p_hz"></div>
+        <div><label for="p_lr">Largo máx. por biodigestor (m)</label><input type="number" step="1" value="20" id="p_lr"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 9. TANQUE BIOL -->
+  <section class="card step" id="sec-biol">
+    <span class="tag liquida">Fracción líquida</span>
+    <h2>Tanque de almacenamiento de biol</h2>
+    <p class="sub">Acumula el efluente del biodigestor mientras se dispone su uso o vertimiento.</p>
+
+    <div class="results"><table id="tbl_biol"></table></div>
+
+    <details class="adv">
+      <summary>Opciones avanzadas — tanque de biol</summary>
+      <div class="grid cols-4">
+        <div><label for="p_ta_biol">Tiempo de almacenamiento (d)</label><input type="number" step="1" value="5" id="p_ta_biol"></div>
+        <div><label for="p_hbl_biol">Borde libre (m)</label><input type="number" step="0.05" value="0.3" id="p_hbl_biol"></div>
+        <div><label for="p_htb">Altura útil del tanque (m)</label><input type="number" step="0.1" value="2.0" id="p_htb"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- 10. DESTINO DEL BIOL -->
+  <section class="card step" id="sec-destino">
+    <span class="tag liquida">Fracción líquida</span>
+    <h2>Destino del biol</h2>
+    <p class="sub">El biol puede aprovecharse como biofertilizante en cultivos, o requerir un tratamiento terciario antes de verterse a una fuente de agua.</p>
+
+    <h3>1. Selecciona el cultivo de referencia</h3>
+    <div class="grid cols-4">
+      <div>
+        <label for="cultivo">Cultivo</label>
+        <select id="cultivo">
+          <option value="estrella">Pasto estrella</option>
+          <option value="boton">Botón de oro</option>
+          <option value="elefante">Pasto elefante</option>
+        </select>
+      </div>
+      <div><label for="conc_n_cs">[N] en biol, escenario CS (kg/m³)</label><input type="number" step="0.01" value="0.60" id="conc_n_cs"></div>
+      <div><label for="conc_n_ss">[N] en biol, escenario SS (kg/m³)</label><input type="number" step="0.01" value="1.08" id="conc_n_ss"></div>
+    </div>
+
+    <div class="results"><table id="tbl_aplicacion"></table></div>
+
+    <h3>2. ¿Cuentas con esa área disponible para aplicar el biol?</h3>
+    <div class="grid">
+      <div><label for="ha_disp">Hectáreas disponibles para riego con biol</label><input type="number" step="0.1" value="0" id="ha_disp"></div>
+    </div>
+
+    <div id="veredicto_biol" class="note" style="display:none;"></div>
+
+    <div id="bloque_terciario" style="display:none;">
+      <h3>3. Comparación de tecnologías de tratamiento terciario</h3>
+      <p class="sub">Si no dispones del área requerida, el biol debe pasar por un tratamiento terciario antes de verterse. Compara el área que necesitaría cada alternativa y elige la que mejor se ajuste a tu terreno.</p>
+      <table class="compare-table" id="tbl_terciario"></table>
+    </div>
+  </section>
+
+</div>
+
+<div class="step-footer">
+  <div class="inner">
+    <button type="button" class="nav-btn ghost" id="btnPrev" onclick="prevStep()">← Atrás</button>
+    <span class="counter" id="stepCounter">Paso 1 de 10</span>
+    <button type="button" class="nav-btn" id="btnNext" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="close-lb" onclick="closeLightbox(event)">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer class="foot">
+  Primera versión de la calculadora — valores por defecto tomados del modelo de dimensionamiento del sistema de tratamiento de porcinaza. Ajusta cualquier parámetro en "opciones avanzadas" según las condiciones reales de tu finca.
+</footer>
+
+
+<script src="calculadora.js"></script>
+</body>
+</html>
