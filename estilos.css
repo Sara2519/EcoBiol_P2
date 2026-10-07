@@ -253,28 +253,66 @@
   footer.foot{max-width:880px;margin:30px auto 0;padding:0 20px;color:var(--text-muted);font-size:12px;}
 
 /* ================= Portada (index.html) ================= */
-.landing{
+/* Diseño basado en Canva. Solo aplica cuando <body class="pagina-portada"> */
+body.pagina-portada{
+  --portada-fondo:#FBFBF9;
+  --portada-texto:#111111;
+  --portada-verde-oscuro:#3E6B2F;
+  --portada-verde-claro:#6E9A3A;
+  background:var(--portada-fondo);
+  color:var(--portada-texto);
+  font-family:'Lato','Segoe UI',Arial,sans-serif;
+  line-height:1.4;
+}
+.portada{
   min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:40px 20px;
-  background:linear-gradient(165deg, var(--green) 0%, #1F3A24 100%);
+  max-width:1080px;
+  margin:0 auto;
+  padding:clamp(2rem,6vh,4.5rem) 1.5rem 2.5rem;
+  display:flex;flex-direction:column;justify-content:center;
+  gap:clamp(1.5rem,4vh,2.5rem);
+}
+.portada__titulo{
+  font-family:'Poppins','Segoe UI',Arial,sans-serif;
+  font-weight:700;
+  font-size:clamp(1.9rem,4.6vw,3.1rem);
+  line-height:1.12;
+  text-align:center;
+  max-width:14em;      /* corta el título en dos líneas como en Canva */
+  margin:0 auto;
+}
+.portada__centro{
+  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:2rem;
+}
+.portada__logo{width:clamp(180px,22vw,240px);height:auto;display:block;}
+.portada__accion{
+  display:flex;flex-direction:column;align-items:center;
+  gap:clamp(2rem,6vh,3.5rem);
+  margin-right:clamp(0px,10vw,140px); /* compensa el logo para centrar el texto */
+}
+.portada__subtitulo{
+  font-style:italic;font-weight:700;
+  font-size:clamp(1.1rem,1.8vw,1.3rem);
+  text-align:center;max-width:22em;margin:0;
+}
+.portada__boton{
+  display:inline-block;min-width:270px;
+  padding:1.15rem 2.5rem;border-radius:999px;
+  background:linear-gradient(90deg,var(--portada-verde-oscuro),var(--portada-verde-claro));
   color:#fff;
+  font-family:'Poppins','Segoe UI',Arial,sans-serif;
+  font-weight:700;font-size:1.25rem;
+  text-align:center;text-decoration:none;
+  transition:transform .15s ease, box-shadow .15s ease;
 }
-.landing .eyebrow{
-  font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#BFE0C4;margin-bottom:16px;font-weight:600;
+.portada__boton:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(62,107,47,.3);}
+.portada__boton:focus-visible{outline:3px solid var(--portada-verde-oscuro);outline-offset:4px;}
+.portada__creditos{font-weight:700;font-size:.95rem;text-align:justify;hyphens:auto;margin:0;}
+
+@media (max-width:720px){
+  .portada__centro{grid-template-columns:1fr;justify-items:center;gap:1.5rem;}
+  .portada__accion{margin-right:0;gap:1.75rem;}
+  .portada__boton{min-width:0;width:100%;max-width:320px;}
+  .portada__creditos{text-align:left;font-size:.9rem;}
 }
-.landing h1{font-size:clamp(28px,5vw,40px);margin:0 0 14px;font-weight:800;letter-spacing:-0.01em;}
-.landing p.tagline{max-width:480px;color:#DCE6DD;font-size:15.5px;line-height:1.65;margin:0 0 30px;}
-.landing .features{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:34px;max-width:620px;}
-.landing .feature{
-  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:12px;
-  padding:14px 16px;font-size:12.5px;width:150px;color:#EAF2EA;
-}
-.landing .feature .ico{font-size:22px;display:block;margin-bottom:6px;}
-.landing .cta{
-  background:#fff;color:var(--green);border:none;padding:14px 32px;border-radius:10px;
-  font-size:15.5px;font-weight:700;text-decoration:none;display:inline-block;
-  box-shadow:0 6px 20px rgba(0,0,0,0.18);
-}
-.landing .cta:hover{background:#F1F5EE;}
-.landing .footnote{margin-top:24px;font-size:12px;color:#9FB79F;max-width:420px;}
+@media (prefers-reduced-motion:reduce){ .portada__boton{transition:none;} }
