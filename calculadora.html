@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora — ECOBIOL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 </head>
-<body>
-
+<body class="pagina-calc">
 
 <header class="top">
   <div class="inner">
@@ -16,53 +18,110 @@
   </div>
 </header>
 
-<nav class="flow-nav"><div class="inner">
-  <button type="button" class="flow-dot general" data-step="sec-escenario" onclick="goToStep('sec-escenario')">1. Escenario</button>
-  <button type="button" class="flow-dot general" data-step="sec-poblacion" onclick="goToStep('sec-poblacion')">2. Población</button>
-  <button type="button" class="flow-dot general" data-step="sec-caudal" onclick="goToStep('sec-caudal')">3. Caudal</button>
-  <button type="button" class="flow-dot liquida" data-step="sec-recepcion" onclick="goToStep('sec-recepcion')">4. Tanque recepción</button>
-  <button type="button" class="flow-dot liquida" data-step="sec-biodigestor" onclick="goToStep('sec-biodigestor')">5. Biodigestor</button>
-  <button type="button" class="flow-dot liquida" data-step="sec-biol" onclick="goToStep('sec-biol')">6. Tanque de biol</button>
-  <button type="button" class="flow-dot liquida" data-step="sec-destino" onclick="goToStep('sec-destino')">7. Destino del biol</button>
-  <button type="button" class="flow-dot solida" data-step="sec-lechos" onclick="goToStep('sec-lechos')">8. Lechos de secado</button>
-  <button type="button" class="flow-dot solida" data-step="sec-marquesina" onclick="goToStep('sec-marquesina')">9. Marquesina</button>
-  <button type="button" class="flow-dot solida" data-step="sec-compost" onclick="goToStep('sec-compost')">10. Compostaje</button>
-</div></nav>
+<nav class="flow-nav" aria-label="Pasos de la calculadora">
+  <div class="inner">
+
+    <!-- Etapas del sistema -->
+    <div class="fases">
+      <div class="fase general">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2.5" width="6" height="3" rx="1"/><path d="M8 10l1.2 1.2L11.5 9M8 15l1.2 1.2 2.3-2.2M13.5 10.5H16M13.5 15.5H16"/></svg>
+        <span>Información de tu granja</span>
+      </div>
+      <div class="fase liquida">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3.5 4.6 6 8 6 11a6 6 0 0 1-12 0c0-3 2.5-6.4 6-11z"/></svg>
+        <span>Tratamiento de la fracción líquida</span>
+      </div>
+      <div class="fase solida">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18c1.5-4 4.5-7 9-7s7.5 3 9 7z"/><circle cx="9" cy="14.5" r=".9"/><circle cx="13" cy="13.5" r=".9"/><circle cx="15.5" cy="16" r=".9"/><circle cx="11" cy="16.5" r=".9"/></svg>
+        <span>Manejo de la fracción sólida</span>
+      </div>
+    </div>
+
+    <!-- Línea de pasos -->
+    <ol class="stepper">
+      <li><button type="button" class="flow-dot general" data-step="sec-escenario" onclick="goToStep('sec-escenario')"><span class="num">1</span><span class="lbl">Escenario</span></button></li>
+      <li><button type="button" class="flow-dot general" data-step="sec-poblacion" onclick="goToStep('sec-poblacion')"><span class="num">2</span><span class="lbl">Población</span></button></li>
+      <li><button type="button" class="flow-dot general" data-step="sec-caudal" onclick="goToStep('sec-caudal')"><span class="num">3</span><span class="lbl">Caudal</span></button></li>
+      <li><button type="button" class="flow-dot liquida" data-step="sec-recepcion" onclick="goToStep('sec-recepcion')"><span class="num">4</span><span class="lbl">Tanque de recepción</span></button></li>
+      <li><button type="button" class="flow-dot liquida" data-step="sec-biodigestor" onclick="goToStep('sec-biodigestor')"><span class="num">5</span><span class="lbl">Biodigestor</span></button></li>
+      <li><button type="button" class="flow-dot liquida" data-step="sec-biol" onclick="goToStep('sec-biol')"><span class="num">6</span><span class="lbl">Tanque de biol</span></button></li>
+      <li><button type="button" class="flow-dot liquida" data-step="sec-destino" onclick="goToStep('sec-destino')"><span class="num">7</span><span class="lbl">Destino del biol</span></button></li>
+      <li><button type="button" class="flow-dot solida" data-step="sec-lechos" onclick="goToStep('sec-lechos')"><span class="num">8</span><span class="lbl">Lechos de secado</span></button></li>
+      <li><button type="button" class="flow-dot solida" data-step="sec-marquesina" onclick="goToStep('sec-marquesina')"><span class="num">9</span><span class="lbl">Marquesina de secado</span></button></li>
+      <li><button type="button" class="flow-dot solida" data-step="sec-compost" onclick="goToStep('sec-compost')"><span class="num">10</span><span class="lbl">Compostaje</span></button></li>
+    </ol>
+  </div>
+</nav>
 
 <div class="wrap">
 
   <!-- 1. ESCENARIO -->
-  <section class="card step" id="sec-escenario">
-    <span class="tag general">Paso 1</span>
-    <h2>Escenario del sistema</h2>
-    <p class="sub">Define si tu sistema separará mecánicamente los sólidos antes del tratamiento.</p>
-    <div class="choice-grid">
-      <label class="choice-card selected" id="cardCS">
-        <input type="radio" name="escenario" value="CS" id="escCS" checked>
-        <span class="badge-check">✓</span>
-        <div class="diagram">
-          <img src="plano-con-separacion.png" alt="Plano del tratamiento con separación de sólidos">
-          <button type="button" class="btn-plano" onclick="event.preventDefault();event.stopPropagation();openLightbox('plano-con-separacion.png','Tratamiento con separación (CS)')">⤢ Ver plano completo</button>
-        </div>
-        <div class="body">
-          <h4>Con separación (CS)</h4>
-          <p>Tienes o planeas instalar un separador sólido-líquido (SEP-01) antes del tanque de recepción. Los sólidos van a marquesina (MS-01) y compostaje (CP-01); el líquido sigue a tanque de recepción (TR-01), lechos de secado (LS-01) y biodigestor (BD-01). Reduce la carga que llega al tratamiento líquido.</p>
-        </div>
-      </label>
+  <section class="step paso" id="sec-escenario">
 
-      <label class="choice-card" id="cardSS">
-        <input type="radio" name="escenario" value="SS" id="escSS">
-        <span class="badge-check">✓</span>
-        <div class="diagram">
-          <img src="plano-sin-separacion.png" alt="Plano del tratamiento sin separación de sólidos">
-          <button type="button" class="btn-plano" onclick="event.preventDefault();event.stopPropagation();openLightbox('plano-sin-separacion.png','Tratamiento sin separación (SS)')">⤢ Ver plano completo</button>
-        </div>
-        <div class="body">
-          <h4>Sin separación (SS)</h4>
-          <p>Toda la porcinaza va junta al tanque de recepción (TR-01), sin separar sólidos primero. Es más simple de instalar, pero el tanque de recepción y el biodigestor (BD-01) deben manejar un caudal y una carga de sólidos mayores.</p>
-        </div>
-      </label>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 1</span>
+      <div>
+        <h2>Elige cómo manejar la porcinaza</h2>
+        <p class="sub">Antes de dimensionar el sistema, define si separarás los sólidos de la porcinaza o si la tratarás sin separación.</p>
+      </div>
     </div>
+
+    <div class="caja-info">
+      <h3>¿Por qué es importante esta decisión?</h3>
+      <p>La porcinaza contiene una fracción sólida y una fracción líquida. Separarlas permite manejar cada una de forma adecuada, facilita las etapas de tratamiento, reduce la carga contaminante y permite aprovechar el compost y el biol.</p>
+      <p>La alternativa con o sin separación depende de la cantidad de porcinaza generada, el espacio disponible, la disponibilidad de agua, la inversión y la capacidad de operación y mantenimiento de la granja.</p>
+    </div>
+
+    <div class="alternativas">
+
+      <article class="alternativa selected" id="cardCS">
+        <input type="radio" name="escenario" value="CS" id="escCS" checked>
+        <h4>Alternativa con separación</h4>
+        <img src="alternativa-con-separacion.png" alt="Esquema del sistema con separación: los sólidos van a marquesinas de secado y compostaje; la fracción líquida pasa por tanque de recepción, biodigestor y tanque de biol">
+        <div class="alternativa__botones">
+          <label for="escCS" class="btn-seleccionar">
+            <span class="ico-check" aria-hidden="true">✓</span>
+            <span class="txt-sel">Seleccionar esta alternativa</span>
+            <span class="txt-ok">Alternativa seleccionada</span>
+          </label>
+          <button type="button" class="btn-plano" onclick="openLightbox('plano-con-separacion.png','Plano del tratamiento con separación (CS)')">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            Ver plano detallado
+          </button>
+        </div>
+      </article>
+
+      <article class="alternativa" id="cardSS">
+        <input type="radio" name="escenario" value="SS" id="escSS">
+        <h4>Alternativa sin separación</h4>
+        <img src="alternativa-sin-separacion.png" alt="Esquema del sistema sin separación: toda la porcinaza pasa por tanque de recepción, biodigestor y tanque de biol; los lodos van a lechos de secado">
+        <div class="alternativa__botones">
+          <label for="escSS" class="btn-seleccionar">
+            <span class="ico-check" aria-hidden="true">✓</span>
+            <span class="txt-sel">Seleccionar esta alternativa</span>
+            <span class="txt-ok">Alternativa seleccionada</span>
+          </label>
+          <button type="button" class="btn-plano" onclick="openLightbox('plano-sin-separacion.png','Plano del tratamiento sin separación (SS)')">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            Ver plano detallado
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Solo visible cuando se elige la alternativa con separación -->
+    <div class="bloque-separacion" id="bloqueSeparacion">
+      <div class="caja-info">
+        <h3>Si seleccionaste la alternativa con separación…</h3>
+        <p>Existen diferentes formas de separar los sólidos de la porcinaza. A continuación se presentan algunas alternativas.</p>
+      </div>
+      <figure class="tecnologias">
+        <figcaption>Tecnologías de separación sólido-líquido</figcaption>
+        <img src="tecnologias-separacion.png" alt="Tres tecnologías de separación: manual, mecánica (tornillo prensa) y centrífuga">
+      </figure>
+    </div>
+
   </section>
   <section class="card step" id="sec-poblacion">
     <span class="tag general">Paso 2</span>
@@ -280,7 +339,7 @@
 
 <div class="step-footer">
   <div class="inner">
-    <button type="button" class="nav-btn ghost" id="btnPrev" onclick="prevStep()">← Atrás</button>
+    <button type="button" class="nav-btn" id="btnPrev" onclick="prevStep()">← Atrás</button>
     <span class="counter" id="stepCounter">Paso 1 de 10</span>
     <button type="button" class="nav-btn" id="btnNext" onclick="nextStep()">Siguiente →</button>
   </div>

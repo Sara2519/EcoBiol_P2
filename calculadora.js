@@ -36,9 +36,20 @@ function renderSteps(){
   document.getElementById('btnNext').disabled = (idx===vis.length-1);
   document.querySelectorAll('.flow-dot').forEach(function(dot){
     var id = dot.getAttribute('data-step');
-    dot.style.display = (vis.indexOf(id)!==-1) ? '' : 'none';
+    var pos = vis.indexOf(id);
+    dot.parentElement.style.display = (pos!==-1) ? '' : 'none';
+    dot.querySelector('.num').textContent = pos + 1; // renumera si se oculta la marquesina
     dot.classList.toggle('current', id===currentStepId);
+    dot.classList.toggle('done', pos!==-1 && pos < idx);
+    if(id===currentStepId){ dot.setAttribute('aria-current','step'); } else { dot.removeAttribute('aria-current'); }
   });
+  var actual = document.querySelector('.flow-dot.current');
+  var stepper = document.querySelector('.stepper');
+  if(actual && stepper && stepper.scrollWidth > stepper.clientWidth){
+    // en celular, desplaza la línea de pasos para que el paso actual quede visible
+    var li = actual.parentElement;
+    stepper.scrollTo({left: li.offsetLeft - (stepper.clientWidth - li.offsetWidth)/2, behavior:'smooth'});
+  }
   window.scrollTo({top:0, behavior:'smooth'});
 }
 function goToStep(id){ currentStepId = id; renderSteps(); }
@@ -51,10 +62,16 @@ function prevStep(){
   if(idx > 0){ currentStepId = vis[idx-1]; renderSteps(); }
 }
 
+// Muestra la información de tecnologías de separación solo en el escenario CS
+function actualizarBloqueSeparacion(){
+  document.getElementById('bloqueSeparacion').style.display = escenario()==='CS' ? '' : 'none';
+}
+
 document.querySelectorAll('input[name=escenario]').forEach(function(r){
   r.addEventListener('change', function(){
     document.getElementById('cardCS').classList.toggle('selected', escenario()==='CS');
     document.getElementById('cardSS').classList.toggle('selected', escenario()==='SS');
+    actualizarBloqueSeparacion();
     calculateAll();
     renderSteps();
   });
@@ -341,5 +358,6 @@ document.querySelectorAll('input, select').forEach(function(el){
   el.addEventListener('change', calculateAll);
 });
 
+actualizarBloqueSeparacion();
 calculateAll();
 renderSteps();
