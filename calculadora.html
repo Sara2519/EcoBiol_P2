@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css?v=6">
+<link rel="stylesheet" href="estilos.css?v=8c">
 </head>
 <body class="pagina-calc">
 
@@ -318,23 +318,55 @@
   </section>
 
   <!-- 5. LECHOS DE SECADO -->
-  <section class="card step" id="sec-lechos">
-    <span class="tag solida">Fracción sólida</span>
-    <h2>Lechos de secado</h2>
-    <p class="sub">Deshidratan los lodos que se acumulan en la tolva del tanque de recepción. Aplica siempre, sin importar el escenario, porque el tanque de recepción sedimenta lodos en ambos casos.</p>
+  <!-- 8. LECHOS DE SECADO -->
+  <section class="step paso" id="sec-lechos">
 
-    <div class="results"><table id="tbl_lechos"></table></div>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 8</span>
+      <div>
+        <h2>Lechos de secado</h2>
+        <p class="sub sub--ancho">Unidad destinada a reducir la humedad de los sólidos y lodos generados durante el tratamiento, facilitando su manejo y aprovechamiento posterior.</p>
+      </div>
+    </div>
+
+    <div class="unidad">
+      <div class="unidad__visual">
+        <img src="lechos-ilustracion.png" alt="Ilustración de dos lechos de secado cubiertos, con capas de lodo, adobe, arena, grava media y grava gruesa, y borde libre de 0,5 a 0,9 m">
+        <button type="button" class="btn-plano-unidad" onclick="abrirPlano('planoLechos')">
+          <span class="btn-plano-unidad__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          </span>
+          <span>Ver plano detallado del lecho de secado <small>con tus dimensiones calculadas</small></span>
+          <svg class="btn-plano-unidad__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="unidad__datos">
+        <h3 class="dimensiones-titulo">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 42 13v22L24 44 6 35V13z" fill="#7C9A82"/><path d="M24 4 42 13 24 22 6 13z" fill="#A9C0AC"/><path d="M24 22v22L6 35V13z" fill="#5E7D64"/></svg>
+          Dimensiones del lecho de secado
+        </h3>
+        <table class="tabla-dimensiones">
+          <tbody id="tbl_lechos"></tbody>
+        </table>
+        <p class="recordatorio">Recuerda contar con dos o más lechos para que se permita alternar su uso y facilitar las labores de retiro del material seco, limpieza y mantenimiento.</p>
+      </div>
+    </div>
 
     <details class="adv">
-      <summary>Opciones avanzadas — lechos de secado</summary>
+      <summary>
+        <svg class="adv__engrane" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span>Opciones avanzadas — lechos de secado</span>
+        <svg class="adv__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
       <div class="grid cols-4">
         <div><label for="p_ts">Tiempo de secado (d)</label><input type="number" step="1" value="18" id="p_ts"></div>
         <div><label for="p_tl">Tiempo de limpieza (d)</label><input type="number" step="1" value="2" id="p_tl"></div>
-        <div><label for="p_qs">Carga superficial (kg SST/m²·año)</label><input type="number" step="1" value="135" id="p_qs"></div>
-        <div><label for="p_hlecho">Altura medio filtrante (m)</label><input type="number" step="0.05" value="0.60" id="p_hlecho"></div>
+        <div><label for="p_qs">Carga superficial de sólidos (kg SST/m²·año)</label><input type="number" step="1" value="135" id="p_qs"></div>
+        <div><label for="p_hlecho">Altura del medio filtrante (m)</label><input type="number" step="0.05" value="0.60" id="p_hlecho"></div>
         <div><label for="p_hbl_lecho">Borde libre (m)</label><input type="number" step="0.05" value="0.50" id="p_hbl_lecho"></div>
-        <div><label for="p_hi_lecho">Humedad inicial (%)</label><input type="number" step="1" value="95" id="p_hi_lecho"></div>
-        <div><label for="p_hf_lecho">Humedad final (%)</label><input type="number" step="1" value="50" id="p_hf_lecho"></div>
+        <div><label for="p_hi_lecho">Humedad inicial del lodo (%)</label><input type="number" step="1" value="95" id="p_hi_lecho"></div>
+        <div><label for="p_hf_lecho">Humedad final del lodo (%)</label><input type="number" step="1" value="50" id="p_hf_lecho"></div>
       </div>
     </details>
   </section>
@@ -641,6 +673,41 @@
   </div>
 </div>
 
+<!-- Plano detallado del lecho de secado con las dimensiones calculadas -->
+<div class="lightbox plano-modal" id="planoLechos" role="dialog" aria-modal="true" aria-labelledby="planoLechosTitulo" onclick="cerrarPlano(event, 'planoLechos')">
+  <div class="plano-modal__hoja" onclick="event.stopPropagation()">
+    <div class="plano-modal__barra">
+      <h2 id="planoLechosTitulo">Plano del lecho de secado</h2>
+      <button type="button" class="close-lb" onclick="cerrarPlano(null, 'planoLechos')" aria-label="Cerrar plano">✕</button>
+    </div>
+    <p class="plano-modal__pista">Desliza hacia los lados para ver el plano completo.</p>
+    <div class="plano-modal__lienzo">
+    <svg class="plano-svg" viewBox="0 0 2000 1410" role="img" aria-label="Plano en corte del lecho de secado con ancho, largo, borde libre y capa de lodos calculados">
+      <image href="plano-lechos-secado.png" width="2000" height="1410"/>
+      <g class="plano-cotas">
+        <rect x="900" y="210" width="200" height="44"/>
+        <text x="1000" y="244" text-anchor="middle">Ancho: <tspan id="pll_ancho">—</tspan> m</text>
+        <rect x="320" y="335" width="160" height="72"/>
+        <text x="400" y="362" text-anchor="middle">Borde libre</text>
+        <text x="400" y="397" text-anchor="middle"><tspan id="pll_bl">—</tspan> m</text>
+        <rect x="1425" y="410" width="380" height="42"/>
+        <text x="1430" y="442">Capa de lodos: <tspan id="pll_lodo">—</tspan> m</text>
+        <rect x="890" y="1372" width="210" height="38"/>
+        <text x="995" y="1402" text-anchor="middle">Largo: <tspan id="pll_largo">—</tspan> m</text>
+      </g>
+      <g class="plano-resumen">
+        <rect x="1420" y="705" width="550" height="235" rx="18"/>
+        <text x="1450" y="756" class="t">Dimensiones calculadas</text>
+        <text x="1450" y="808">Área total: <tspan id="pll_area">—</tspan> m²</text>
+        <text x="1450" y="852">Medio filtrante: <tspan id="pll_medio">—</tspan> m</text>
+        <text x="1450" y="896">Altura total: <tspan id="pll_total">—</tspan> m</text>
+      </g>
+    </svg>
+    </div>
+    <p class="plano-modal__nota">Los espesores de cada capa del medio filtrante (arena y gravas), el tamaño de los adobes y su separación, la tubería de desagüe de 100 mm y la pendiente del 1 % son recomendaciones constructivas.</p>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="close-lb" onclick="closeLightbox(event)">✕</button>
   <img id="lightbox-img" src="" alt="">
@@ -651,6 +718,6 @@
 </footer>
 
 
-<script src="calculadora.js?v=6"></script>
+<script src="calculadora.js?v=8c"></script>
 </body>
 </html>

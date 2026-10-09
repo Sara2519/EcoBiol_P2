@@ -197,14 +197,14 @@ function calculateAll(){
   var M_LD_L = (1-Hf_lecho)>0 ? M_LH*(1-Hi_lecho)/(1-Hf_lecho) : 0;
 
   setTable('tbl_lechos',
-    row('Caudal de lodo húmedo', fmt(Q_LH,3), 'm³/d') +
-    row('Área superficial', fmt(A_LS,2), 'm²') +
-    row('Largo', fmt(L_LS,2), 'm') +
-    row('Ancho', fmt(B_LS,2), 'm') +
-    row('Altura de la capa de lodo', fmt(h_lodo,2), 'm') +
-    row('Altura total', fmt(h_T_lecho,2), 'm') +
-    row('Flujo de lodo deshidratado', fmt(M_LD_L,2), 'kg/d')
+    filaDim('Área superficial total', A_LS, 'm²') +
+    filaDim('Largo', L_LS, 'm') +
+    filaDim('Ancho', B_LS, 'm') +
+    filaDim('Altura de la capa de lodo', h_lodo, 'm') +
+    filaDim('Altura total', h_T_lecho, 'm', 'Capa de lodo + medio filtrante ('+fmt(h_lecho,2)+' m) + borde libre ('+fmt(h_BL_lecho,2)+' m)')
   );
+  var cotasLS = {pll_ancho:B_LS, pll_largo:L_LS, pll_bl:h_BL_lecho, pll_lodo:h_lodo, pll_area:A_LS, pll_medio:h_lecho, pll_total:h_T_lecho};
+  Object.keys(cotasLS).forEach(function(id){ document.getElementById(id).textContent = fmt(cotasLS[id],2); });
 
   // --- 6. Marquesina (solo CS) ---
   var M_LD_M = 0;
