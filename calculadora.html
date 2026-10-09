@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css?v=4">
+<link rel="stylesheet" href="estilos.css?v=5">
 </head>
 <body class="pagina-calc">
 
@@ -382,22 +382,54 @@
   </section>
 
   <!-- 8. BIODIGESTOR -->
-  <section class="card step" id="sec-biodigestor">
-    <span class="tag liquida">Fracción líquida</span>
-    <h2>Biodigestor tubular</h2>
-    <p class="sub">Estabiliza anaeróbicamente la fracción líquida y produce biogás y biol.</p>
+  <!-- 5. BIODIGESTOR -->
+  <section class="step paso" id="sec-biodigestor">
 
-    <div class="results"><table id="tbl_biodigestor"></table></div>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 5</span>
+      <div>
+        <h2>Biodigestor</h2>
+        <p class="sub sub--ancho">Unidad destinada a la estabilización anaerobia de la materia orgánica presente en la porcinaza. Durante el proceso se produce biogás y se obtiene biol como efluente.</p>
+      </div>
+    </div>
+
+    <div class="unidad">
+      <div class="unidad__visual">
+        <img src="biodigestor-ilustracion.png" alt="Ilustración de un biodigestor tubular enterrado en una zanja, con válvula de alivio en la parte superior y caja de salida del biol">
+        <button type="button" class="btn-plano-unidad" onclick="abrirPlano('planoBiodigestor')">
+          <span class="btn-plano-unidad__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          </span>
+          <span>Ver plano detallado del biodigestor <small>con tus dimensiones calculadas</small></span>
+          <svg class="btn-plano-unidad__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="unidad__datos">
+        <h3 class="dimensiones-titulo">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 42 13v22L24 44 6 35V13z" fill="#7C9A82"/><path d="M24 4 42 13 24 22 6 13z" fill="#A9C0AC"/><path d="M24 22v22L6 35V13z" fill="#5E7D64"/></svg>
+          Dimensiones del biodigestor
+        </h3>
+        <table class="tabla-dimensiones">
+          <tbody id="tbl_biodigestor"></tbody>
+        </table>
+        <p class="nota-biodigestor" id="notaBiodigestor"></p>
+      </div>
+    </div>
 
     <details class="adv">
-      <summary>Opciones avanzadas — biodigestor</summary>
+      <summary>
+        <svg class="adv__engrane" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span>Opciones avanzadas — biodigestor</span>
+        <svg class="adv__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
       <div class="grid cols-4">
-        <div><label for="p_trh_bio">TRH (d)</label><input type="number" step="1" value="35" id="p_trh_bio"></div>
-        <div><label for="p_fg">Factor de mayoración biogás</label><input type="number" step="0.01" value="1.15" id="p_fg"></div>
-        <div><label for="p_binf">Ancho inferior zanja (m)</label><input type="number" step="0.1" value="2.0" id="p_binf"></div>
-        <div><label for="p_bsup">Ancho superior zanja (m)</label><input type="number" step="0.1" value="2.5" id="p_bsup"></div>
-        <div><label for="p_hz">Profundidad zanja (m)</label><input type="number" step="0.1" value="1.5" id="p_hz"></div>
-        <div><label for="p_lr">Largo máx. por biodigestor (m)</label><input type="number" step="1" value="20" id="p_lr"></div>
+        <div><label for="p_trh_bio">Tiempo de retención hidráulica (d)</label><input type="number" step="1" value="35" id="p_trh_bio"></div>
+        <div><label for="p_fg">Factor de mayoración por biogás</label><input type="number" step="0.01" value="1.15" id="p_fg"></div>
+        <div><label for="p_binf">Ancho inferior de la zanja (m)</label><input type="number" step="0.1" value="2.0" id="p_binf"></div>
+        <div><label for="p_bsup">Ancho superior de la zanja (m)</label><input type="number" step="0.1" value="2.5" id="p_bsup"></div>
+        <div><label for="p_hz">Profundidad de la zanja (m)</label><input type="number" step="0.1" value="1.5" id="p_hz"></div>
+        <div><label for="p_lr">Largo comercial de cada biodigestor (m)</label><input type="number" step="1" value="20" id="p_lr"></div>
       </div>
     </details>
   </section>
@@ -506,6 +538,42 @@
   </div>
 </div>
 
+<!-- Plano detallado del biodigestor con las dimensiones calculadas -->
+<div class="lightbox plano-modal" id="planoBiodigestor" role="dialog" aria-modal="true" aria-labelledby="planoBioTitulo" onclick="cerrarPlano(event, 'planoBiodigestor')">
+  <div class="plano-modal__hoja" onclick="event.stopPropagation()">
+    <div class="plano-modal__barra">
+      <h2 id="planoBioTitulo">Plano del biodigestor tubular</h2>
+      <button type="button" class="close-lb" onclick="cerrarPlano(null, 'planoBiodigestor')" aria-label="Cerrar plano">✕</button>
+    </div>
+    <p class="plano-modal__pista">Desliza hacia los lados para ver el plano completo.</p>
+    <div class="plano-modal__lienzo">
+    <svg class="plano-svg" viewBox="0 0 2000 1410" role="img" aria-label="Plano del biodigestor con anchos de zanja, altura de la zanja y largo calculados">
+      <image href="plano-biodigestor.png" width="2000" height="1410"/>
+      <g class="plano-cotas">
+        <rect x="830" y="105" width="300" height="62"/>
+        <text x="978" y="134" text-anchor="middle">Ancho superior</text>
+        <text x="978" y="164" text-anchor="middle"><tspan id="plb_bsup">—</tspan> m</text>
+        <rect x="1185" y="345" width="175" height="62"/>
+        <text x="1272" y="374" text-anchor="middle">Altura zanja</text>
+        <text x="1272" y="404" text-anchor="middle"><tspan id="plb_hz">—</tspan> m</text>
+        <rect x="830" y="505" width="300" height="62"/>
+        <text x="978" y="532" text-anchor="middle">Ancho inferior</text>
+        <text x="978" y="562" text-anchor="middle"><tspan id="plb_binf">—</tspan> m</text>
+        <rect x="770" y="1163" width="430" height="46"/>
+        <text x="985" y="1197" text-anchor="middle" id="plb_largo">Largo: — m</text>
+      </g>
+      <g class="plano-resumen">
+        <rect x="40" y="40" width="470" height="200" rx="18"/>
+        <text x="72" y="94" class="t">Dimensiones calculadas</text>
+        <text x="72" y="148">Volumen: <tspan id="plb_vol">—</tspan> m³</text>
+        <text x="72" y="198" id="plb_num">Biodigestores: 1</text>
+      </g>
+    </svg>
+    </div>
+    <p class="plano-modal__nota">La pendiente longitudinal (0,5–1 %), las zanjas a 45° para las tuberías y la columna de agua de la válvula de alivio son recomendaciones constructivas.</p>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="close-lb" onclick="closeLightbox(event)">✕</button>
   <img id="lightbox-img" src="" alt="">
@@ -516,6 +584,6 @@
 </footer>
 
 
-<script src="calculadora.js?v=4"></script>
+<script src="calculadora.js?v=5"></script>
 </body>
 </html>

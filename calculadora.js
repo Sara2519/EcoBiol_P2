@@ -270,13 +270,32 @@ function calculateAll(){
   var L_B = A_zanja>0 ? V_B/A_zanja : 0;
   var N_B = L_R>0 ? Math.ceil(L_B/L_R) : 0;
 
-  setTable('tbl_biodigestor',
-    row('Caudal de alimentación (Q_B)', fmt(Q_B,3), 'm³/d') +
-    row('Volumen del biodigestor', fmt(V_B,2), 'm³') +
-    row('Área transversal de la zanja', fmt(A_zanja,2), 'm²') +
-    row('Longitud total', fmt(L_B,2), 'm') +
-    row('Número de biodigestores de '+fmt(L_R,0)+' m', fmt(N_B,0), '')
-  );
+  // Número de biodigestores: solo se muestra cuando el largo calculado se acerca
+  // (90 % o más) o supera el largo comercial de un biodigestor.
+  var UMBRAL_LARGO = 0.9;
+  var variosBio = L_R>0 && L_B >= UMBRAL_LARGO*L_R;
+  var filasBio =
+    filaDim('Volumen del biodigestor', V_B, 'm³') +
+    filaDim('Ancho de zanja inferior', B_inf, 'm') +
+    filaDim('Ancho de zanja superior', B_sup, 'm') +
+    filaDim('Profundidad de la zanja', h_z, 'm');
+  var notaBio = document.getElementById('notaBiodigestor');
+  if(variosBio){
+    filasBio += filaDim('Largo total calculado', L_B, 'm');
+    filasBio += '<tr class="fila-destacada"><th scope="row">N.° de biodigestores de '+fmt(L_R,0)+' m</th><td><b>'+fmt(N_B,0)+'</b> '+(N_B===1?'unidad':'unidades')+'</td></tr>';
+    notaBio.textContent = 'El largo calculado se acerca o supera el largo comercial de '+fmt(L_R,0)+' m, por eso se recomienda instalar '+fmt(N_B,0)+(N_B===1?' biodigestor':' biodigestores')+' de '+fmt(L_R,0)+' m.';
+    notaBio.style.display = '';
+    document.getElementById('plb_largo').textContent = 'Largo: '+fmt(L_R,0)+' m (cada uno)';
+    document.getElementById('plb_num').textContent = 'Biodigestores de '+fmt(L_R,0)+' m: '+fmt(N_B,0);
+  } else {
+    filasBio += filaDim('Largo', L_B, 'm');
+    notaBio.style.display = 'none';
+    document.getElementById('plb_largo').textContent = 'Largo: '+fmt(L_B,2)+' m';
+    document.getElementById('plb_num').textContent = 'Un solo biodigestor';
+  }
+  setTable('tbl_biodigestor', filasBio);
+  var cotasBio = {plb_bsup:B_sup, plb_binf:B_inf, plb_hz:h_z, plb_vol:V_B};
+  Object.keys(cotasBio).forEach(function(id){ document.getElementById(id).textContent = fmt(cotasBio[id],2); });
 
   // --- 9. Tanque de biol ---
   var t_A_biol = num('p_ta_biol'), h_BL_biol = num('p_hbl_biol'), h_TB = num('p_htb');

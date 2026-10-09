@@ -627,3 +627,10 @@ details.adv .grid > div{display:flex;flex-direction:column;justify-content:flex-
   .plano-modal__lienzo .plano-svg{width:950px;max-width:none;max-height:none;}
   .plano-modal__pista{display:block;}
 }
+
+/* Paso 5 — Biodigestor */
+.tabla-dimensiones tr.fila-destacada th,.tabla-dimensiones tr.fila-destacada td{background:var(--green-light);font-weight:700;}
+.nota-biodigestor{
+  margin:14px 0 0;padding:12px 16px;border-radius:8px;
+  background:var(--teal-light);color:#1F4F57;font-size:clamp(14px,1.3vw,17px);line-height:1.4;
+}
