@@ -45,6 +45,11 @@ function renderSteps(){
     document.getElementById(id).classList.toggle('active', id===currentStepId);
   });
   var idx = vis.indexOf(currentStepId);
+  // Insignias "Paso N" según los pasos visibles (en SS la marquesina se oculta)
+  vis.forEach(function(id, k){
+    var badge = document.querySelector('#'+id+' .paso-badge');
+    if(badge){ badge.textContent = 'Paso '+(k+1); }
+  });
   document.getElementById('stepCounter').textContent = 'Paso '+(idx+1)+' de '+vis.length;
   document.getElementById('btnPrev').disabled = (idx===0);
   document.getElementById('btnNext').textContent = (idx===vis.length-1) ? 'Finalizar ✓' : 'Siguiente →';
@@ -243,20 +248,21 @@ function calculateAll(){
   var A_P = h_P>0 ? V_pila/h_P : 0;
   var B_P = Math.min(Math.sqrt(A_P/2), B_max);
   var L_P = B_P>0 ? A_P/B_P : 0;
-  var N_pilas = t_ll>0 ? t_cc/t_ll : 0;
+  var N_pilas = t_ll>0 ? Math.ceil(t_cc/t_ll - 1e-9) : 0; // número entero de pilas
   var A_compost = A_P*N_pilas;
 
   setTable('tbl_compost',
-    row('Masa de lodo a compostar (M_D)', fmt(M_D,2), 'kg/d') +
-    row('Volumen diario de porcinaza deshidratada', fmt(V_D,3), 'm³/d') +
-    row('Volumen diario de pasto picado', fmt(V_pasto,3), 'm³/d') +
-    row('Volumen de la pila', fmt(V_pila,2), 'm³') +
-    row('Área superficial de una pila', fmt(A_P,2), 'm²') +
-    row('Ancho de la pila', fmt(B_P,2), 'm') +
-    row('Largo de la pila', fmt(L_P,2), 'm') +
-    row('Número de pilas', fmt(N_pilas,1), '') +
-    row('Área total requerida', fmt(A_compost,2), 'm²')
+    filaDim('Volumen de la pila', V_pila, 'm³') +
+    filaDim('Área superficial de la pila', A_P, 'm²') +
+    filaDim('Ancho de la pila', B_P, 'm') +
+    filaDim('Largo de la pila', L_P, 'm') +
+    '<tr><th scope="row">Número de pilas</th><td><b>'+fmt(N_pilas,0)+'</b></td></tr>' +
+    filaDim('Área total requerida', A_compost, 'm²')
   );
+  function ponerTodos(clase, valor){ document.querySelectorAll('.'+clase).forEach(function(el){ el.textContent = fmt(valor,2); }); }
+  ponerTodos('plc_ancho', B_P); ponerTodos('plc_largo', L_P); ponerTodos('plc_alto', h_P);
+  document.getElementById('plc_num').textContent = fmt(N_pilas,0);
+  document.getElementById('plc_area').textContent = fmt(A_compost,2);
 
   // --- 8. Biodigestor ---
   var TRH_bio = num('p_trh_bio'), F_g = num('p_fg');
