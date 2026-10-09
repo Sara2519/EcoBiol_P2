@@ -263,25 +263,56 @@
   </section>
 
   <!-- 4. TANQUE RECEPCION -->
-  <section class="card step" id="sec-recepcion">
-    <span class="tag liquida">Fracción líquida</span>
-    <h2>Tanque de recepción</h2>
-    <p class="sub">Primera unidad del sistema: amortigua el caudal y sedimenta los sólidos más pesados.</p>
+  <!-- 4. TANQUE DE RECEPCIÓN -->
+  <section class="step paso" id="sec-recepcion">
 
-    <div class="results"><table id="tbl_recepcion"></table></div>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 4</span>
+      <div>
+        <h2>Tanque de recepción</h2>
+        <p class="sub sub--ancho">Primera unidad del sistema: recibe la fracción líquida, amortigua el caudal y permite la sedimentación de los sólidos más pesados.</p>
+      </div>
+    </div>
+
+    <div class="unidad">
+      <div class="unidad__visual">
+        <img src="tanque-recepcion-ilustracion.png" alt="Ilustración del tanque de recepción cubierto, con pantallas deflectoras, salida hacia el biodigestor, altura útil mínima de 1 m y tolva de lodos que descarga hacia los lechos de secado como máximo cada dos días">
+        <button type="button" class="btn-plano-unidad" onclick="abrirPlano('planoTanque')">
+          <span class="btn-plano-unidad__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          </span>
+          <span>Ver plano detallado del tanque <small>con tus dimensiones calculadas</small></span>
+          <svg class="btn-plano-unidad__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="unidad__datos">
+        <h3 class="dimensiones-titulo">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 42 13v22L24 44 6 35V13z" fill="#7C9A82"/><path d="M24 4 42 13 24 22 6 13z" fill="#A9C0AC"/><path d="M24 22v22L6 35V13z" fill="#5E7D64"/></svg>
+          Dimensiones del tanque
+        </h3>
+        <table class="tabla-dimensiones">
+          <tbody id="tbl_recepcion"></tbody>
+        </table>
+      </div>
+    </div>
 
     <details class="adv">
-      <summary>Opciones avanzadas — tanque de recepción</summary>
+      <summary>
+        <svg class="adv__engrane" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span>Opciones avanzadas — tanque de recepción</span>
+        <svg class="adv__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
       <div class="grid cols-4">
-        <div><label for="p_trh">TRH (d)</label><input type="number" step="0.1" value="1" id="p_trh"></div>
-        <div><label for="p_sst_cs">[SST] escenario CS (kg/m³)</label><input type="number" step="0.01" value="6.103" id="p_sst_cs"></div>
-        <div><label for="p_sst_ss">[SST] escenario SS (kg/m³)</label><input type="number" step="0.01" value="2.746" id="p_sst_ss"></div>
-        <div><label for="p_esst">Eficiencia remoción SST (%)</label><input type="number" step="1" value="60" id="p_esst"></div>
-        <div><label for="p_ta">Almacenamiento de lodos (d)</label><input type="number" step="0.5" value="2" id="p_ta"></div>
-        <div><label for="p_rho_lodo">Densidad lodo (kg/m³)</label><input type="number" step="1" value="1030" id="p_rho_lodo"></div>
-        <div><label for="p_cs_lodo">Concentración lodo (%)</label><input type="number" step="0.5" value="5" id="p_cs_lodo"></div>
-        <div><label for="p_ang">Ángulo tolva (°)</label><input type="number" step="1" value="45" id="p_ang"></div>
-        <div><label for="p_bbase">Ancho base tolva (m)</label><input type="number" step="0.05" value="0.20" id="p_bbase"></div>
+        <div><label for="p_trh">Tiempo de retención hidráulica (d)</label><input type="number" step="0.1" value="1" id="p_trh"></div>
+        <div><label for="p_sst_cs">Concentración de SST con separación (kg/m³)</label><input type="number" step="0.01" value="6.103" id="p_sst_cs"></div>
+        <div><label for="p_sst_ss">Concentración de SST sin separación (kg/m³)</label><input type="number" step="0.01" value="2.746" id="p_sst_ss"></div>
+        <div><label for="p_esst">Eficiencia de remoción de SST (%)</label><input type="number" step="1" value="60" id="p_esst"></div>
+        <div><label for="p_ta">Tiempo de almacenamiento de lodos (d)</label><input type="number" step="0.5" value="2" id="p_ta"></div>
+        <div><label for="p_rho_lodo">Densidad del lodo (kg/m³)</label><input type="number" step="1" value="1030" id="p_rho_lodo"></div>
+        <div><label for="p_cs_lodo">Concentración de sólidos en el lodo (%)</label><input type="number" step="0.5" value="5" id="p_cs_lodo"></div>
+        <div><label for="p_ang">Ángulo de la tolva (°)</label><input type="number" step="1" value="45" id="p_ang"></div>
+        <div><label for="p_bbase">Ancho de la base de la tolva (m)</label><input type="number" step="0.05" value="0.20" id="p_bbase"></div>
       </div>
     </details>
   </section>
@@ -432,6 +463,46 @@
     <button type="button" class="nav-btn" id="btnPrev" onclick="prevStep()">← Atrás</button>
     <span class="counter" id="stepCounter">Paso 1 de 10</span>
     <button type="button" class="nav-btn" id="btnNext" onclick="nextStep()">Siguiente →</button>
+  </div>
+</div>
+
+<!-- Plano detallado del tanque de recepción con las dimensiones calculadas -->
+<div class="lightbox plano-modal" id="planoTanque" role="dialog" aria-modal="true" aria-labelledby="planoTanqueTitulo" onclick="cerrarPlano(event, 'planoTanque')">
+  <div class="plano-modal__hoja" onclick="event.stopPropagation()">
+    <div class="plano-modal__barra">
+      <h2 id="planoTanqueTitulo">Plano del tanque de recepción</h2>
+      <button type="button" class="close-lb" onclick="cerrarPlano(null, 'planoTanque')" aria-label="Cerrar plano">✕</button>
+    </div>
+    <p class="plano-modal__pista">Desliza hacia los lados para ver el plano completo.</p>
+    <div class="plano-modal__lienzo">
+    <svg class="plano-svg" viewBox="0 0 2000 1410" role="img" aria-label="Plano en corte del tanque de recepción con largo, ancho, altura útil y altura de la tolva calculados">
+      <image href="plano-tanque-recepcion.png" width="2000" height="1410"/>
+      <g class="plano-cotas">
+        <!-- Largo -->
+        <rect x="860" y="246" width="230" height="48"/>
+        <text x="975" y="282" text-anchor="middle">Largo: <tspan id="pl_largo">—</tspan> m</text>
+        <!-- Ancho -->
+        <rect x="860" y="843" width="232" height="48"/>
+        <text x="976" y="879" text-anchor="middle">Ancho: <tspan id="pl_ancho">—</tspan> m</text>
+        <!-- Altura útil -->
+        <rect x="200" y="538" width="175" height="80"/>
+        <text x="287" y="568" text-anchor="middle">Altura útil</text>
+        <text x="287" y="606" text-anchor="middle"><tspan id="pl_util">—</tspan> m</text>
+        <!-- Altura de la tolva -->
+        <rect x="505" y="1198" width="282" height="50"/>
+        <text x="646" y="1234" text-anchor="middle">Altura tolva: <tspan id="pl_tolva">—</tspan> m</text>
+      </g>
+      <!-- Resumen -->
+      <g class="plano-resumen">
+        <rect x="1430" y="900" width="500" height="250" rx="18"/>
+        <text x="1465" y="955" class="t">Dimensiones calculadas</text>
+        <text x="1465" y="1010">Volumen: <tspan id="pl_vol">—</tspan> m³</text>
+        <text x="1465" y="1058">Profundidad útil: <tspan id="pl_util2">—</tspan> m</text>
+        <text x="1465" y="1106">Profundidad total: <tspan id="pl_total">—</tspan> m</text>
+      </g>
+    </svg>
+    </div>
+    <p class="plano-modal__nota">Las medidas de las pantallas deflectoras (0,6–0,9 m y 0,45–0,60 m), el borde libre con natas (0,4 m) y la pendiente de la tolva (45° a 65°) son recomendaciones constructivas.</p>
   </div>
 </div>
 

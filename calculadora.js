@@ -13,6 +13,21 @@ function closeLightbox(e){
   document.getElementById('lightbox').classList.remove('open');
 }
 
+// --- Planos detallados con dimensiones calculadas ---
+function abrirPlano(id){
+  var m = document.getElementById(id);
+  m.classList.add('open');
+  m.querySelector('.close-lb').focus();
+}
+function cerrarPlano(e, id){
+  document.getElementById(id).classList.remove('open');
+}
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){
+    document.querySelectorAll('.lightbox.open').forEach(function(m){ m.classList.remove('open'); });
+  }
+});
+
 function escenario(){ return document.getElementById('escCS').checked ? 'CS' : 'SS'; }
 
 // --- Navegación por pasos a pantalla completa ---
@@ -149,16 +164,20 @@ function calculateAll(){
   var V_tolva = (t_a*M_s)/(rho_lodo*Cs_lodo);
   var H_tolva = Math.max(0,(B_TR - B_base)/2) * Math.tan(ang);
 
+  function filaDim(nombre, valor, unidad, nota){
+    return '<tr><th scope="row">'+nombre+(nota?'<small>'+nota+'</small>':'')+'</th><td><b>'+fmt(valor,2)+'</b> '+unidad+'</td></tr>';
+  }
   setTable('tbl_recepcion',
-    row('Volumen del tanque', fmt(V_TR,2), 'm³') +
-    row('Largo', fmt(L_TR,2), 'm') +
-    row('Ancho', fmt(B_TR,2), 'm') +
-    row('Profundidad útil', fmt(H_TR,2), 'm') +
-    row('Profundidad total', fmt(H_T_TR,2), 'm') +
-    row('Carga de lodos (M_s)', fmt(M_s,2), 'kg SST/d') +
-    row('Volumen de la tolva', fmt(V_tolva,3), 'm³') +
-    row('Altura de la tolva', fmt(H_tolva,2), 'm')
+    filaDim('Volumen del tanque', V_TR, 'm³') +
+    filaDim('Largo', L_TR, 'm') +
+    filaDim('Ancho', B_TR, 'm') +
+    filaDim('Profundidad útil', H_TR, 'm', H_TR===1 && L_TR/5<1 ? 'Se adopta la profundidad mínima de 1 m' : '') +
+    filaDim('Altura de la tolva', H_tolva, 'm') +
+    filaDim('Profundidad total', H_T_TR, 'm', 'Profundidad útil + borde libre y natas (0,4 m)')
   );
+  // Cotas en el plano detallado
+  var cotas = {pl_largo:L_TR, pl_ancho:B_TR, pl_util:H_TR, pl_tolva:H_tolva, pl_vol:V_TR, pl_util2:H_TR, pl_total:H_T_TR};
+  Object.keys(cotas).forEach(function(id){ document.getElementById(id).textContent = fmt(cotas[id],2); });
 
   // --- 5. Lechos de secado ---
   var t_S = num('p_ts'), t_L = num('p_tl'), q_s = num('p_qs');
