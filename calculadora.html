@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css?v=10">
+<link rel="stylesheet" href="estilos.css?v=12">
 </head>
 <body class="pagina-calc">
 
@@ -597,38 +597,154 @@
   </section>
 
   <!-- 10. DESTINO DEL BIOL -->
-  <section class="card step" id="sec-destino">
-    <span class="tag liquida">Fracción líquida</span>
-    <h2>Destino del biol</h2>
-    <p class="sub">El biol puede aprovecharse como biofertilizante en cultivos, o requerir un tratamiento terciario antes de verterse a una fuente de agua.</p>
+  <!-- 7. DESTINO DEL BIOL -->
+  <section class="step paso" id="sec-destino">
 
-    <h3>1. Selecciona el cultivo de referencia</h3>
-    <div class="grid cols-4">
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 7</span>
       <div>
-        <label for="cultivo">Cultivo</label>
-        <select id="cultivo">
-          <option value="estrella">Pasto estrella</option>
-          <option value="boton">Botón de oro</option>
-          <option value="elefante">Pasto elefante</option>
-        </select>
+        <h2>Destino del biol</h2>
+        <p class="sub sub--ancho">Define si el biol puede aprovecharse o si requiere tratamiento terciario antes de su vertimiento.</p>
       </div>
-      <div><label for="conc_n_cs">[N] en biol, escenario CS (kg/m³)</label><input type="number" step="0.01" value="0.60" id="conc_n_cs"></div>
-      <div><label for="conc_n_ss">[N] en biol, escenario SS (kg/m³)</label><input type="number" step="0.01" value="1.08" id="conc_n_ss"></div>
     </div>
 
-    <div class="results"><table id="tbl_aplicacion"></table></div>
+    <!-- Bloque 1: cultivo -->
+    <div class="bloque-num bloque-num--fondo">
+      <div class="bloque-num__cab">
+        <span class="bloque-num__n" aria-hidden="true">1</span>
+        <div>
+          <h3>Selecciona un cultivo de referencia</h3>
+          <p>Selecciona el cultivo sobre el cual se aplicará el biol y verifica los resultados de la aplicación.</p>
+        </div>
+      </div>
 
-    <h3>2. ¿Cuentas con esa área disponible para aplicar el biol?</h3>
-    <div class="grid">
-      <div><label for="ha_disp">Hectáreas disponibles para riego con biol</label><input type="number" step="0.1" value="0" id="ha_disp"></div>
+      <div class="campos-biol">
+        <div class="campo">
+          <label for="cultivo">Cultivo</label>
+          <select id="cultivo">
+            <option value="estrella">Pasto estrella</option>
+            <option value="boton">Botón de oro</option>
+            <option value="elefante">Pasto elefante</option>
+            <option value="otro">Otro cultivo</option>
+          </select>
+          <small class="campo__ayuda" id="ayudaCultivo"></small>
+        </div>
+        <div class="campo solo-cs">
+          <label for="conc_n_cs">Nitrógeno en el biol, con separación (kg/m³)</label>
+          <input type="number" step="0.01" value="0.60" id="conc_n_cs">
+        </div>
+        <div class="campo solo-ss">
+          <label for="conc_n_ss">Nitrógeno en el biol, sin separación (kg/m³)</label>
+          <input type="number" step="0.01" value="1.08" id="conc_n_ss">
+        </div>
+        <div class="campo solo-otro">
+          <label for="otro_tfn">Tasa de fijación de nitrógeno del cultivo (kg N/ha·año)</label>
+          <input type="number" step="1" min="1" value="500" id="otro_tfn">
+        </div>
+        <div class="campo solo-otro">
+          <label for="otro_frec">Frecuencia de aspersión (cada cuántos días)</label>
+          <input type="number" step="1" min="1" value="30" id="otro_frec">
+        </div>
+      </div>
+
+      <div class="resultados-aplicacion">
+        <div class="resultados-aplicacion__titulo">
+          <span class="gota" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 3c3.5 4.6 6 8 6 11a6 6 0 0 1-12 0c0-3 2.5-6.4 6-11z"/></svg>
+          </span>
+          <h4>Resultados de aplicación</h4>
+        </div>
+        <table class="tabla-aplicacion">
+          <tbody id="tbl_aplicacion"></tbody>
+        </table>
+      </div>
     </div>
 
-    <div id="veredicto_biol" class="note" style="display:none;"></div>
+    <!-- Bloque 2: área disponible -->
+    <div class="bloque-num">
+      <div class="bloque-num__cab">
+        <span class="bloque-num__n" aria-hidden="true">2</span>
+        <div>
+          <h3>¿Tienes terreno suficiente para aplicar el biol?</h3>
+          <p>Ingresa el área disponible para el riego del biol.</p>
+        </div>
+      </div>
+      <div class="campo campo--ha">
+        <label for="ha_disp">Hectáreas disponibles para riego</label>
+        <div class="campo-unidad"><input type="number" step="0.1" min="0" value="0" id="ha_disp"><span>ha</span></div>
+      </div>
+      <div id="veredicto_biol" class="veredicto" role="status"></div>
+    </div>
 
-    <div id="bloque_terciario" style="display:none;">
-      <h3>3. Comparación de tecnologías de tratamiento terciario</h3>
-      <p class="sub">Si no dispones del área requerida, el biol debe pasar por un tratamiento terciario antes de verterse. Compara el área que necesitaría cada alternativa y elige la que mejor se ajuste a tu terreno.</p>
-      <table class="compare-table" id="tbl_terciario"></table>
+    <!-- Bloque 3: tratamiento terciario -->
+    <div class="bloque-num" id="bloque_terciario">
+      <div class="bloque-num__cab">
+        <span class="bloque-num__n" aria-hidden="true">3</span>
+        <div>
+          <h3>Alternativas de tratamiento terciario</h3>
+          <p>Si no dispones del área requerida, selecciona una alternativa para conocer sus dimensiones. Usa el botón <b>Ver</b> para conocer cómo es cada tecnología.</p>
+        </div>
+      </div>
+      <p class="caudal-terciario" id="caudalTerciario"></p>
+      <div class="tabla-terciario-wrap">
+        <table class="tabla-terciario">
+          <thead>
+            <tr><th scope="col"><span class="sr-only">Seleccionar</span></th><th scope="col">Tecnología</th><th scope="col">Área (m²)</th><th scope="col">Ancho (m)</th><th scope="col">Largo (m)</th><th scope="col"><span class="sr-only">Ver tecnología</span></th></tr>
+          </thead>
+          <tbody id="tbl_terciario"></tbody>
+        </table>
+      </div>
+      <p class="nota-info"><span aria-hidden="true">i</span> La alternativa seleccionada debe ajustarse al terreno y a las condiciones del sistema. En zonas de interés hidrogeológico se recomienda priorizar las alternativas de descarga cero.</p>
+
+      <details class="adv">
+        <summary>
+          <svg class="adv__engrane" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+          <span>Opciones avanzadas — tratamiento terciario</span>
+          <svg class="adv__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="adv-grupos">
+          <fieldset>
+            <legend>Generales (humedales)</legend>
+            <div class="grid cols-4">
+              <div><label for="t_temp">Temperatura del agua (°C)</label><input type="number" step="0.5" value="25" id="t_temp"></div>
+              <div class="solo-cs"><label for="t_co_cs">DBO de entrada, con separación (mg/L)</label><input type="number" step="1" value="897" id="t_co_cs"></div>
+              <div class="solo-cs"><label for="t_ce_cs">DBO de salida, con separación (mg/L)</label><input type="number" step="1" value="269" id="t_ce_cs"></div>
+              <div class="solo-ss"><label for="t_co_ss">DBO de entrada, sin separación (mg/L)</label><input type="number" step="1" value="931" id="t_co_ss"></div>
+              <div class="solo-ss"><label for="t_ce_ss">DBO de salida, sin separación (mg/L)</label><input type="number" step="1" value="279" id="t_ce_ss"></div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Humedal de flujo superficial (HC-FS)</legend>
+            <div class="grid cols-4">
+              <div><label for="t_fs_k20">Constante de remoción k₂₀ (d⁻¹)</label><input type="number" step="0.001" value="0.678" id="t_fs_k20"></div>
+              <div><label for="t_fs_theta">Coeficiente de temperatura θ</label><input type="number" step="0.01" value="1.06" id="t_fs_theta"></div>
+              <div><label for="t_fs_d">Profundidad del agua (m)</label><input type="number" step="0.01" value="0.55" id="t_fs_d"></div>
+              <div><label for="t_fs_p">Porosidad</label><input type="number" step="0.01" value="0.75" id="t_fs_p"></div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Humedal de flujo subsuperficial (HC-FSS)</legend>
+            <div class="grid cols-4">
+              <div><label for="t_fss_k20">Constante de remoción k₂₀ (d⁻¹)</label><input type="number" step="0.001" value="1.104" id="t_fss_k20"></div>
+              <div><label for="t_fss_theta">Coeficiente de temperatura θ</label><input type="number" step="0.01" value="1.06" id="t_fss_theta"></div>
+              <div><label for="t_fss_d">Profundidad del lecho (m)</label><input type="number" step="0.01" value="0.45" id="t_fss_d"></div>
+              <div><label for="t_fss_p">Porosidad del medio</label><input type="number" step="0.01" value="0.38" id="t_fss_p"></div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Filtros</legend>
+            <div class="grid cols-4">
+              <div><label for="t_fia_lw">FIA — carga hidráulica (m³/m²·d)</label><input type="number" step="0.01" value="0.45" id="t_fia_lw"></div>
+              <div><label for="t_fv_m">FV — coeficiente m</label><input type="number" step="0.1" value="2" id="t_fv_m"></div>
+              <div><label for="t_fv_b">FV — exponente b</label><input type="number" step="0.1" value="1" id="t_fv_b"></div>
+              <div><label for="t_dz_tre">FV-DZ — tiempo de retención evapotranspirativa, T<sub>RE</sub></label><input type="number" step="0.01" value="21.98" id="t_dz_tre"></div>
+              <div><label for="t_efa_ki">FV-EFA — coeficiente Ki</label><input type="number" step="0.05" value="0.5" id="t_efa_ki"></div>
+              <div><label for="t_efa_tre">FV-EFA — tiempo de retención evapotranspirativa, T<sub>RE</sub></label><input type="number" step="0.01" value="21.98" id="t_efa_tre"></div>
+              <div><label for="t_efa_p">FV-EFA — precipitación P (L/m²·d)</label><input type="number" step="0.01" value="6.23" id="t_efa_p"></div>
+            </div>
+          </fieldset>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -637,7 +753,10 @@
 <div class="step-footer">
   <div class="inner">
     <button type="button" class="nav-btn" id="btnPrev" onclick="prevStep()">← Atrás</button>
-    <span class="counter" id="stepCounter">Paso 1 de 10</span>
+    <div class="footer-centro">
+      <span class="counter" id="stepCounter">Paso 1 de 10</span>
+      <button type="button" class="btn-resumen" onclick="abrirResumen()">Ver resumen</button>
+    </div>
     <button type="button" class="nav-btn" id="btnNext" onclick="nextStep()">Siguiente →</button>
   </div>
 </div>
@@ -877,6 +996,64 @@
   </div>
 </div>
 
+<!-- Ficha de cada tecnología de tratamiento terciario -->
+<div class="lightbox plano-modal" id="fichaTerciario" role="dialog" aria-modal="true" aria-labelledby="fichaTTTitulo" onclick="cerrarPlano(event, 'fichaTerciario')">
+  <div class="plano-modal__hoja ficha" onclick="event.stopPropagation()">
+    <div class="plano-modal__barra">
+      <h2 id="fichaTTTitulo">Tecnología</h2>
+      <button type="button" class="close-lb" onclick="cerrarPlano(null, 'fichaTerciario')" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="ficha__cuerpo">
+      <img id="fichaTTImg" src="" alt="">
+      <div class="ficha__texto">
+        <p id="fichaTTDesc"></p>
+        <table class="tabla-dimensiones"><tbody id="fichaTTDim"></tbody></table>
+        <button type="button" class="btn-seleccionar ficha__elegir" id="fichaTTElegir">
+          <span class="ico-check" aria-hidden="true">✓</span><span id="fichaTTElegirTxt">Seleccionar esta alternativa</span>
+        </button>
+      </div>
+    </div>
+    <p class="plano-modal__nota">Ilustración tomada de la Guía de buenas prácticas ambientales para el manejo de la porcinaza en zonas acuíferas.</p>
+  </div>
+</div>
+
+<!-- Resumen final: plano general con las dimensiones calculadas -->
+<div class="lightbox plano-modal" id="resumen" role="dialog" aria-modal="true" aria-labelledby="resumenTitulo" onclick="cerrarPlano(event, 'resumen')">
+  <div class="plano-modal__hoja resumen" onclick="event.stopPropagation()">
+    <div class="plano-modal__barra">
+      <h2 id="resumenTitulo">Resumen del sistema de tratamiento</h2>
+      <button type="button" class="close-lb no-imprimir" onclick="cerrarPlano(null, 'resumen')" aria-label="Cerrar resumen">✕</button>
+    </div>
+    <div class="resumen__datos">
+      <div><span>Escenario</span><b id="resumenEsc">—</b></div>
+      <div><span>Población</span><b id="resumenCE">—</b></div>
+      <div><span>Caudal de diseño</span><b id="resumenQ">—</b></div>
+    </div>
+    <p class="plano-modal__pista">Desliza hacia los lados para ver el plano completo.</p>
+    <div class="plano-modal__lienzo">
+      <svg class="plano-svg plano-resumen-svg" id="planoResumenCS" viewBox="0 0 1400 986" role="img" aria-label="Plano general del sistema con separación con las dimensiones calculadas">
+        <image href="plano-con-separacion.png" width="1400" height="986"/>
+        <g class="tag-res" id="rc_ms"><rect rx="6"/><text x="428" y="140"></text></g><g class="tag-res" id="rc_cp"><rect rx="6"/><text x="740" y="150"></text></g><g class="tag-res" id="rc_tr"><rect rx="6"/><text x="226" y="422"></text></g><g class="tag-res" id="rc_ls"><rect rx="6"/><text x="445" y="490"></text></g><g class="tag-res" id="rc_bd"><rect rx="6"/><text x="330" y="602"></text></g><g class="tag-res" id="rc_tb"><rect rx="6"/><text x="610" y="592"></text></g><g class="tag-res" id="rc_tt"><rect rx="6"/><text x="1035" y="385"></text></g><g class="tag-res" id="rc_ap"><rect rx="6"/><text x="1040" y="553"></text></g>
+      </svg>
+      <svg class="plano-svg plano-resumen-svg" id="planoResumenSS" viewBox="0 0 1400 986" role="img" aria-label="Plano general del sistema sin separación con las dimensiones calculadas">
+        <image href="plano-sin-separacion.png" width="1400" height="986"/>
+        <g class="tag-res" id="rs_tr"><rect rx="6"/><text x="246" y="394"></text></g><g class="tag-res" id="rs_ls"><rect rx="6"/><text x="466" y="464"></text></g><g class="tag-res" id="rs_bd"><rect rx="6"/><text x="345" y="572"></text></g><g class="tag-res" id="rs_tb"><rect rx="6"/><text x="632" y="562"></text></g><g class="tag-res" id="rs_tt"><rect rx="6"/><text x="1057" y="357"></text></g><g class="tag-res" id="rs_ap"><rect rx="6"/><text x="1062" y="527"></text></g>
+      </svg>
+    </div>
+    <p class="plano-modal__nota">V: volumen · A: área superficial · Las medidas se expresan como largo × ancho.</p>
+
+    <div class="tabla-resumen-wrap">
+      <table class="tabla-resumen">
+        <thead><tr><th scope="col">Unidad</th><th scope="col">Volumen (m³)</th><th scope="col">Área (m²)</th><th scope="col">Largo (m)</th><th scope="col">Ancho (m)</th><th scope="col">Observaciones</th></tr></thead>
+        <tbody id="tbl_resumen"></tbody>
+      </table>
+    </div>
+    <div class="resumen__acciones no-imprimir">
+      <button type="button" class="nav-btn" onclick="window.print()">Imprimir o guardar en PDF</button>
+    </div>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="close-lb" onclick="closeLightbox(event)">✕</button>
   <img id="lightbox-img" src="" alt="">
@@ -887,6 +1064,6 @@
 </footer>
 
 
-<script src="calculadora.js?v=10"></script>
+<script src="calculadora.js?v=12"></script>
 </body>
 </html>
