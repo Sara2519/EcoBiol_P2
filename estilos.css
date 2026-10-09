@@ -642,3 +642,4 @@ details.adv .grid > div{display:flex;flex-direction:column;justify-content:flex-
 }
 .recordatorio span{display:block;margin-top:10px;font-weight:400;font-size:.8em;color:var(--text-muted);}
 .plano-modal__sub{font-family:var(--f-texto);font-weight:400;font-size:.65em;color:var(--text-muted);}
+.plano-cotas text.fijo{fill:#333;font-weight:400;}

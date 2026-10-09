@@ -221,14 +221,12 @@ function calculateAll(){
     M_LD_M = (1-Hf_mq)>0 ? M_exc_s*(1-Hi_mq)/(1-Hf_mq) : 0;
 
     setTable('tbl_marquesina',
-      row('Masa de excretas separadas', fmt(M_exc_s,2), 'kg/d') +
-      row('Caudal de excretas separadas', fmt(Q_exc_s,3), 'm³/d') +
-      row('Volumen acumulado', fmt(V_acum,2), 'm³') +
-      row('Área superficial', fmt(A_MS,2), 'm²') +
-      row('Largo', fmt(L_MS,2), 'm') +
-      row('Ancho', fmt(B_MS,2), 'm') +
-      row('Flujo de lodo deshidratado', fmt(M_LD_M,2), 'kg/d')
+      filaDim('Área superficial total', A_MS, 'm²') +
+      filaDim('Largo', L_MS, 'm') +
+      filaDim('Ancho', B_MS, 'm')
     );
+    var cotasMQ = {plm_ancho1:B_MS, plm_ancho2:B_MS, plm_largo:L_MS, plm_capa:h_PS, plm_area:A_MS};
+    Object.keys(cotasMQ).forEach(function(id){ document.getElementById(id).textContent = fmt(cotasMQ[id],2); });
   } else {
     setTable('tbl_marquesina', '<tr><td class="k">No aplica en el escenario SS.</td><td></td></tr>');
   }

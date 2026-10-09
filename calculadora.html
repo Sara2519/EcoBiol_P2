@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css?v=8c">
+<link rel="stylesheet" href="estilos.css?v=9">
 </head>
 <body class="pagina-calc">
 
@@ -372,21 +372,53 @@
   </section>
 
   <!-- 6. MARQUESINA -->
-  <section class="card step" id="sec-marquesina">
-    <span class="tag solida">Fracción sólida — solo escenario CS</span>
-    <h2>Marquesina de secado</h2>
-    <p class="sub">Deshidrata la fracción sólida separada mecánicamente antes del tanque de recepción. Solo aplica si elegiste el escenario con separación (CS).</p>
+  <!-- 9. MARQUESINA DE SECADO (solo CS) -->
+  <section class="step paso" id="sec-marquesina">
 
-    <div class="results"><table id="tbl_marquesina"></table></div>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 9</span>
+      <div>
+        <h2>Marquesina de secado</h2>
+        <p class="sub sub--ancho">La marquesina permite continuar el secado de la fracción sólida en un espacio protegido de la lluvia, favoreciendo la reducción de humedad antes de su manejo o aprovechamiento.</p>
+      </div>
+    </div>
+
+    <div class="unidad">
+      <div class="unidad__visual">
+        <img src="marquesina-ilustracion.png" alt="Ilustración de una marquesina de secado con cubierta plástica, capa de lodo de 0,1 m y cerramiento de 0,8 a 1 m">
+        <button type="button" class="btn-plano-unidad" onclick="abrirPlano('planoMarquesina')">
+          <span class="btn-plano-unidad__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          </span>
+          <span>Ver plano detallado de la marquesina <small>con tus dimensiones calculadas</small></span>
+          <svg class="btn-plano-unidad__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="unidad__datos">
+        <h3 class="dimensiones-titulo">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 42 13v22L24 44 6 35V13z" fill="#7C9A82"/><path d="M24 4 42 13 24 22 6 13z" fill="#A9C0AC"/><path d="M24 22v22L6 35V13z" fill="#5E7D64"/></svg>
+          Dimensiones de la marquesina
+        </h3>
+        <table class="tabla-dimensiones">
+          <tbody id="tbl_marquesina"></tbody>
+        </table>
+        <p class="recordatorio">Recuerda contar con dos o más marquesinas para que se permita alternar su uso y facilitar las labores de retiro del material seco, limpieza y mantenimiento.</p>
+      </div>
+    </div>
 
     <details class="adv">
-      <summary>Opciones avanzadas — marquesina de secado</summary>
+      <summary>
+        <svg class="adv__engrane" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span>Opciones avanzadas — marquesina de secado</span>
+        <svg class="adv__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
       <div class="grid cols-4">
         <div><label for="p_tcd">Ciclo de deshidratación (d)</label><input type="number" step="1" value="10" id="p_tcd"></div>
-        <div><label for="p_hps">Altura capa porcinaza (m)</label><input type="number" step="0.01" value="0.10" id="p_hps"></div>
+        <div><label for="p_hps">Altura de la capa de porcinaza (m)</label><input type="number" step="0.01" value="0.10" id="p_hps"></div>
         <div><label for="p_hi_mq">Humedad inicial (%)</label><input type="number" step="1" value="80" id="p_hi_mq"></div>
         <div><label for="p_hf_mq">Humedad final (%)</label><input type="number" step="1" value="50" id="p_hf_mq"></div>
-        <div><label for="p_rhoi">Densidad fracción sólida (kg/m³)</label><input type="number" step="1" value="840" id="p_rhoi"></div>
+        <div><label for="p_rhoi">Densidad de la fracción sólida (kg/m³)</label><input type="number" step="1" value="840" id="p_rhoi"></div>
       </div>
     </details>
   </section>
@@ -708,6 +740,47 @@
   </div>
 </div>
 
+<!-- Plano detallado de la marquesina con las dimensiones calculadas -->
+<div class="lightbox plano-modal" id="planoMarquesina" role="dialog" aria-modal="true" aria-labelledby="planoMqTitulo" onclick="cerrarPlano(event, 'planoMarquesina')">
+  <div class="plano-modal__hoja" onclick="event.stopPropagation()">
+    <div class="plano-modal__barra">
+      <h2 id="planoMqTitulo">Plano de la marquesina de secado</h2>
+      <button type="button" class="close-lb" onclick="cerrarPlano(null, 'planoMarquesina')" aria-label="Cerrar plano">✕</button>
+    </div>
+    <p class="plano-modal__pista">Desliza hacia los lados para ver el plano completo.</p>
+    <div class="plano-modal__lienzo">
+    <svg class="plano-svg" viewBox="0 0 2000 1410" role="img" aria-label="Plano en planta y cortes de la marquesina con largo, ancho y capa de lodo calculados">
+      <image href="plano-marquesina.png" width="2000" height="1410"/>
+      <g class="plano-cotas">
+        <!-- Ancho (planta, texto vertical) -->
+        <rect x="150" y="380" width="52" height="170"/>
+        <text x="186" y="465" text-anchor="middle" transform="rotate(-90 186 465)">Ancho: <tspan id="plm_ancho1">—</tspan> m</text>
+        <!-- Largo -->
+        <rect x="470" y="1122" width="250" height="46"/>
+        <text x="595" y="1156" text-anchor="middle">Largo: <tspan id="plm_largo">—</tspan> m</text>
+        <!-- Ancho (corte) -->
+        <rect x="1300" y="922" width="250" height="46"/>
+        <text x="1425" y="956" text-anchor="middle">Ancho: <tspan id="plm_ancho2">—</tspan> m</text>
+        <!-- Capa de lodo -->
+        <rect x="1030" y="840" width="150" height="74"/>
+        <text x="1105" y="868" text-anchor="middle">Capa de lodo</text>
+        <text x="1105" y="902" text-anchor="middle"><tspan id="plm_capa">—</tspan> m</text>
+        <!-- Cerramiento (texto corregido) -->
+        <rect x="1660" y="800" width="180" height="62"/>
+        <text x="1748" y="827" text-anchor="middle" class="fijo">Cerramiento</text>
+        <text x="1748" y="857" text-anchor="middle" class="fijo">0,8 a 1 m</text>
+      </g>
+      <g class="plano-resumen">
+        <rect x="1180" y="180" width="560" height="160" rx="18"/>
+        <text x="1210" y="234" class="t">Área superficial total</text>
+        <text x="1210" y="292"><tspan id="plm_area">—</tspan> m²</text>
+      </g>
+    </svg>
+    </div>
+    <p class="plano-modal__nota">La pendiente del piso (1–2 %), el canal de drenaje, el cerramiento (0,8 a 1 m) y la cubierta plástica son recomendaciones constructivas.</p>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="close-lb" onclick="closeLightbox(event)">✕</button>
   <img id="lightbox-img" src="" alt="">
@@ -718,6 +791,6 @@
 </footer>
 
 
-<script src="calculadora.js?v=8c"></script>
+<script src="calculadora.js?v=9"></script>
 </body>
 </html>
