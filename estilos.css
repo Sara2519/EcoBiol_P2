@@ -374,3 +374,64 @@ body.pagina-portada{
   .portada__creditos{text-align:left;font-size:.9rem;}
 }
 @media (prefers-reduced-motion:reduce){ .portada__boton{transition:none;} }
+
+/* =========================================================
+   Paso 2 — Población porcina
+   ========================================================= */
+.grupo-animales{max-width:1160px;margin:clamp(28px,4vw,50px) auto 0;}
+.grupo-titulo{
+  font-family:var(--f-texto);font-size:15px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--green);
+  margin:0 0 12px;
+}
+.animales{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.5vw,20px);}
+.animal{display:flex;flex-direction:column;}
+.animal img{
+  display:block;width:100%;aspect-ratio:268/146;object-fit:contain;
+  border-radius:10px;
+}
+.reproduccion .animal img{background:#FAFAF5;}
+.crecimiento .animal img{background:#EDF5F6;}
+.animal label{
+  font-family:var(--f-texto);font-size:clamp(18px,1.6vw,23px);font-weight:700;
+  color:var(--green);margin:14px 0 10px;
+}
+.animal p{font-size:clamp(16px,1.5vw,21px);line-height:1.2;margin:0 0 16px;}
+.campo-animal{
+  margin-top:auto;
+  display:flex;align-items:center;gap:14px;
+  padding:10px 16px;border-radius:8px;
+}
+.reproduccion .campo-animal{background:#FAFAF5;}
+.crecimiento .campo-animal{background:#EDF5F6;}
+.campo-animal input[type=number]{
+  width:130px;flex:0 0 auto;
+  padding:10px 12px;font-size:18px;
+  background:#fff;border:1px solid #E6E6E1;border-radius:8px;
+  box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.campo-animal input[type=number]:focus{outline:2px solid var(--verde-claro);outline-offset:1px;}
+.campo-animal span{font-size:17px;color:var(--text-muted);}
+
+.resultado-ce{
+  width:min(100%,410px);margin:clamp(36px,4vw,56px) auto 0;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:18px 24px 20px;border-radius:12px;
+  background:linear-gradient(180deg,#E3EEE3,#D9E8DA);
+  border:2px solid #CFE0CF;
+  box-shadow:0 2px 8px rgba(51,83,53,.1);
+}
+.resultado-ce span{font-size:18px;font-weight:700;color:var(--green);}
+.resultado-ce strong{font-family:var(--f-titulo);font-size:clamp(36px,4vw,46px);line-height:1.1;color:#1D2A1E;font-variant-numeric:tabular-nums;}
+
+@media (max-width:900px){
+  .animales{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:600px){
+  .animales{gap:20px 12px;}
+  .animal label{margin:10px 0 6px;}
+  .animal p{font-size:15px;margin-bottom:10px;}
+  .campo-animal{padding:8px;gap:8px;}
+  .campo-animal input[type=number]{width:100%;min-width:0;flex:1 1 auto;font-size:17px;}
+  .campo-animal span{font-size:14px;}
+}

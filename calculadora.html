@@ -123,30 +123,82 @@
     </div>
 
   </section>
-  <section class="card step" id="sec-poblacion">
-    <span class="tag general">Paso 2</span>
-    <h2>Población porcina</h2>
-    <p class="sub">Ingresa el número de animales por grupo. Con esto se calcula el número de cerdos equivalentes (CE), la unidad base de todo el dimensionamiento.</p>
+  <!-- 2. POBLACIÓN -->
+  <section class="step paso" id="sec-poblacion">
 
-    <h3>Reproductoras</h3>
-    <div class="grid">
-      <div><label for="n_hv">Hembras vacías</label><input type="number" min="0" value="0" id="n_hv"></div>
-      <div><label for="n_hg">Hembras gestantes</label><input type="number" min="0" value="0" id="n_hg"></div>
-      <div><label for="n_hl">Hembras lactantes</label><input type="number" min="0" value="0" id="n_hl"></div>
-      <div><label for="n_mr">Machos reproductores</label><input type="number" min="0" value="0" id="n_mr"></div>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 2</span>
+      <div>
+        <h2>Población porcina</h2>
+        <p class="sub">Ingresa el número de animales por grupo. Con esta información se calcula el número de cerdos equivalentes (CE), que es la unidad base para el dimensionamiento del sistema de tratamiento.</p>
+      </div>
     </div>
 
-    <h3>Crecimiento y ceba</h3>
-    <div class="grid">
-      <div><label for="n_ll">Lechones lactantes</label><input type="number" min="0" value="0" id="n_ll"></div>
-      <div><label for="n_p">Precebo</label><input type="number" min="0" value="0" id="n_p"></div>
-      <div><label for="n_l">Levante</label><input type="number" min="0" value="0" id="n_l"></div>
-      <div><label for="n_c">Ceba</label><input type="number" min="0" value="100" id="n_c"></div>
+    <div class="grupo-animales reproduccion">
+      <h3 class="grupo-titulo">Animales destinados a la reproducción</h3>
+      <div class="animales">
+        <div class="animal">
+          <img src="cerdo-hembra-vacia.png" alt="" loading="lazy">
+          <label for="n_hv">Hembra vacía</label>
+          <p>Hembras que no están gestantes ni lactantes.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="0" id="n_hv"><span>animales</span></div>
+        </div>
+        <div class="animal">
+          <img src="cerdo-hembra-gestante.png" alt="" loading="lazy">
+          <label for="n_hg">Hembra gestante</label>
+          <p>Hembras en periodo de gestación.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="0" id="n_hg"><span>animales</span></div>
+        </div>
+        <div class="animal">
+          <img src="cerdo-hembra-lactante.png" alt="" loading="lazy">
+          <label for="n_hl">Hembra lactante</label>
+          <p>Hembras que se encuentran amamantando.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="0" id="n_hl"><span>animales</span></div>
+        </div>
+        <div class="animal">
+          <img src="cerdo-macho-reproductor.png" alt="" loading="lazy">
+          <label for="n_mr">Macho reproductor</label>
+          <p>Machos destinados a la reproducción.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="0" id="n_mr"><span>animales</span></div>
+        </div>
+      </div>
     </div>
 
-    <div class="results">
-      <table><tr><td class="k">Cerdos equivalentes (CE)</td><td class="v" id="out_ce">—</td></tr></table>
+    <div class="grupo-animales crecimiento">
+      <h3 class="grupo-titulo">Animales en crecimiento y ceba</h3>
+      <div class="animales">
+        <div class="animal">
+          <img src="cerdo-lechon-lactante.png" alt="" loading="lazy">
+          <label for="n_ll">Lechón lactante</label>
+          <p>Lechones que aún se encuentran con la madre.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="0" id="n_ll"><span>animales</span></div>
+        </div>
+        <div class="animal">
+          <img src="cerdo-precebo.png" alt="" loading="lazy">
+          <label for="n_p">Precebo</label>
+          <p>Animales después del destete, antes de la etapa de levante.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="0" id="n_p"><span>animales</span></div>
+        </div>
+        <div class="animal">
+          <img src="cerdo-levante.png" alt="" loading="lazy">
+          <label for="n_l">Levante</label>
+          <p>Animales en etapa de crecimiento.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="0" id="n_l"><span>animales</span></div>
+        </div>
+        <div class="animal">
+          <img src="cerdo-ceba.png" alt="" loading="lazy">
+          <label for="n_c">Ceba</label>
+          <p>Animales destinados a la etapa final de engorde.</p>
+          <div class="campo-animal"><input type="number" min="0" step="1" inputmode="numeric" value="100" id="n_c"><span>animales</span></div>
+        </div>
+      </div>
     </div>
+
+    <div class="resultado-ce" aria-live="polite">
+      <span>Población total equivalente:</span>
+      <strong id="out_ce">—</strong>
+    </div>
+
   </section>
 
   <!-- 3. CAUDAL DE DISEÑO -->
