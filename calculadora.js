@@ -306,12 +306,14 @@ function calculateAll(){
   var H_T_TB = h_TB + h_BL_biol;
 
   setTable('tbl_biol',
-    row('Volumen del tanque de biol', fmt(V_TB,2), 'm³') +
-    row('Área superficial', fmt(A_TB,2), 'm²') +
-    row('Largo', fmt(L_TB,2), 'm') +
-    row('Ancho', fmt(B_TB,2), 'm') +
-    row('Altura total', fmt(H_T_TB,2), 'm')
+    filaDim('Volumen del tanque de biol', V_TB, 'm³') +
+    filaDim('Largo', L_TB, 'm') +
+    filaDim('Ancho', B_TB, 'm') +
+    filaDim('Altura útil', h_TB, 'm') +
+    filaDim('Altura total', H_T_TB, 'm', 'Altura útil + borde libre ('+fmt(h_BL_biol,2)+' m)')
   );
+  var cotasTB = {pltb_ancho:B_TB, pltb_largo:L_TB, pltb_total:H_T_TB, pltb_util:h_TB, pltb_bl:h_BL_biol, pltb_vol:V_TB};
+  Object.keys(cotasTB).forEach(function(id){ document.getElementById(id).textContent = fmt(cotasTB[id],2); });
 
   // --- 10. Destino del biol ---
   var cultivo = document.getElementById('cultivo').value;

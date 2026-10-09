@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css?v=5">
+<link rel="stylesheet" href="estilos.css?v=6">
 </head>
 <body class="pagina-calc">
 
@@ -435,15 +435,46 @@
   </section>
 
   <!-- 9. TANQUE BIOL -->
-  <section class="card step" id="sec-biol">
-    <span class="tag liquida">Fracción líquida</span>
-    <h2>Tanque de almacenamiento de biol</h2>
-    <p class="sub">Acumula el efluente del biodigestor mientras se dispone su uso o vertimiento.</p>
+  <!-- 6. TANQUE DE BIOL -->
+  <section class="step paso" id="sec-biol">
 
-    <div class="results"><table id="tbl_biol"></table></div>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 6</span>
+      <div>
+        <h2>Tanque de biol</h2>
+        <p class="sub sub--ancho">Unidad destinada al almacenamiento temporal del biol obtenido después del proceso de biodigestión. Esta unidad se dimensiona únicamente cuando el biol será destinado a aprovechamiento.</p>
+      </div>
+    </div>
+
+    <div class="unidad">
+      <div class="unidad__visual">
+        <img src="tanque-biol-ilustracion.png" alt="Ilustración del tanque de biol semienterrado y cubierto, con tubería de entrada, válvula de salida y borde libre de 0,3 m">
+        <button type="button" class="btn-plano-unidad" onclick="abrirPlano('planoBiol')">
+          <span class="btn-plano-unidad__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          </span>
+          <span>Ver plano detallado del tanque de biol <small>con tus dimensiones calculadas</small></span>
+          <svg class="btn-plano-unidad__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+
+      <div class="unidad__datos">
+        <h3 class="dimensiones-titulo">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 42 13v22L24 44 6 35V13z" fill="#7C9A82"/><path d="M24 4 42 13 24 22 6 13z" fill="#A9C0AC"/><path d="M24 22v22L6 35V13z" fill="#5E7D64"/></svg>
+          Dimensiones del tanque de biol
+        </h3>
+        <table class="tabla-dimensiones">
+          <tbody id="tbl_biol"></tbody>
+        </table>
+      </div>
+    </div>
 
     <details class="adv">
-      <summary>Opciones avanzadas — tanque de biol</summary>
+      <summary>
+        <svg class="adv__engrane" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span>Opciones avanzadas — tanque de biol</span>
+        <svg class="adv__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
       <div class="grid cols-4">
         <div><label for="p_ta_biol">Tiempo de almacenamiento (d)</label><input type="number" step="1" value="5" id="p_ta_biol"></div>
         <div><label for="p_hbl_biol">Borde libre (m)</label><input type="number" step="0.05" value="0.3" id="p_hbl_biol"></div>
@@ -574,6 +605,42 @@
   </div>
 </div>
 
+<!-- Plano detallado del tanque de biol con las dimensiones calculadas -->
+<div class="lightbox plano-modal" id="planoBiol" role="dialog" aria-modal="true" aria-labelledby="planoBiolTitulo" onclick="cerrarPlano(event, 'planoBiol')">
+  <div class="plano-modal__hoja" onclick="event.stopPropagation()">
+    <div class="plano-modal__barra">
+      <h2 id="planoBiolTitulo">Plano del tanque de biol</h2>
+      <button type="button" class="close-lb" onclick="cerrarPlano(null, 'planoBiol')" aria-label="Cerrar plano">✕</button>
+    </div>
+    <p class="plano-modal__pista">Desliza hacia los lados para ver el plano completo.</p>
+    <div class="plano-modal__lienzo">
+    <svg class="plano-svg" viewBox="0 0 2000 1410" role="img" aria-label="Plano en corte del tanque de biol con ancho, largo, altura útil y altura total calculados">
+      <image href="plano-tanque-biol.png" width="2000" height="1410"/>
+      <g class="plano-cotas">
+        <rect x="855" y="195" width="215" height="46"/>
+        <text x="962" y="230" text-anchor="middle">Ancho: <tspan id="pltb_ancho">—</tspan> m</text>
+        <rect x="1270" y="378" width="135" height="70"/>
+        <text x="1336" y="403" text-anchor="middle">Altura total</text>
+        <text x="1336" y="438" text-anchor="middle"><tspan id="pltb_total">—</tspan> m</text>
+        <rect x="890" y="788" width="220" height="46"/>
+        <text x="999" y="823" text-anchor="middle">Largo: <tspan id="pltb_largo">—</tspan> m</text>
+        <rect x="1405" y="858" width="200" height="38"/>
+        <text x="1410" y="888">Borde libre <tspan id="pltb_bl">—</tspan> m</text>
+        <rect x="1440" y="1098" width="120" height="70"/>
+        <text x="1500" y="1123" text-anchor="middle">Altura útil</text>
+        <text x="1500" y="1158" text-anchor="middle"><tspan id="pltb_util">—</tspan> m</text>
+      </g>
+      <g class="plano-resumen">
+        <rect x="1560" y="330" width="410" height="150" rx="18"/>
+        <text x="1590" y="384" class="t">Volumen calculado</text>
+        <text x="1590" y="440"><tspan id="pltb_vol">—</tspan> m³</text>
+      </g>
+    </svg>
+    </div>
+    <p class="plano-modal__nota">Se recomienda cubrir el tanque para evitar el ingreso de agua lluvia e impermeabilizar sus paredes y fondo.</p>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
   <button class="close-lb" onclick="closeLightbox(event)">✕</button>
   <img id="lightbox-img" src="" alt="">
@@ -584,6 +651,6 @@
 </footer>
 
 
-<script src="calculadora.js?v=5"></script>
+<script src="calculadora.js?v=6"></script>
 </body>
 </html>
