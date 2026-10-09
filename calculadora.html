@@ -202,24 +202,62 @@
   </section>
 
   <!-- 3. CAUDAL DE DISEÑO -->
-  <section class="card step" id="sec-caudal">
-    <span class="tag general">Paso 3</span>
-    <h2>Caudal de diseño</h2>
-    <p class="sub">Volumen diario de porcinaza a tratar, calculado a partir del CE y del escenario elegido.</p>
+  <!-- 3. CAUDAL -->
+  <section class="step paso" id="sec-caudal">
 
-    <div class="results">
-      <table id="tbl_caudal"></table>
+    <div class="paso-encabezado">
+      <span class="paso-badge">Paso 3</span>
+      <div>
+        <h2>Caudal de diseño</h2>
+        <p class="sub sub--ancho">El caudal de diseño corresponde al volumen de porcinaza que llegará a las unidades de tratamiento cada día. Se calcula a partir de la población porcina, el escenario seleccionado y el agua utilizada en las actividades de lavado.</p>
+      </div>
+    </div>
+
+    <div class="caudal-intro">
+      <img src="caudal-ilustracion.png" alt="" class="caudal-intro__img">
+      <div class="caja-borde">
+        <h3>¿Por qué cambia el caudal?</h3>
+        <p>Cuando se realiza la separación sólido-líquido, una parte de los sólidos se retira antes del tratamiento de la fracción líquida. Por esto, el caudal que continúa hacia las unidades de tratamiento es menor que en el escenario sin separación.</p>
+      </div>
+    </div>
+
+    <div class="caudal-resultados cs" id="caudalResultados">
+
+      <div class="escenario-banner">
+        <span class="escenario-banner__ico" aria-hidden="true">✓</span>
+        <div>
+          <h3>Escenario seleccionado: <span id="caudalEscNombre">Con separación (CS)</span></h3>
+          <p id="caudalEscTexto"></p>
+        </div>
+      </div>
+
+      <table class="tabla-caudal">
+        <thead><tr><th scope="col">Caudales calculados</th><th scope="col">Resultado</th></tr></thead>
+        <tbody id="tbl_caudal"></tbody>
+      </table>
+
+      <div class="nota-solidos" id="notaSolidos">
+        <span class="nota-solidos__ico" aria-hidden="true">!</span>
+        <div>
+          <h3>Sobre la fracción sólida</h3>
+          <p>Los sólidos retirados <span id="solidosRetirados"></span> no hacen parte del caudal de diseño del tratamiento líquido. Este flujo se utilizará posteriormente para dimensionar las unidades de manejo de sólidos (lechos de secado, marquesina y compostaje).</p>
+        </div>
+      </div>
     </div>
 
     <details class="adv">
-      <summary>Opciones avanzadas — parámetros de caudal</summary>
+      <summary>
+        <svg class="adv__engrane" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span>Opciones avanzadas — parámetros de caudal</span>
+        <svg class="adv__flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </summary>
       <div class="grid cols-4">
-        <div><label for="p_mexc">Producción excretas (kg/CE·d)</label><input type="number" step="0.01" value="5.01" id="p_mexc"></div>
-        <div><label for="p_rho">Densidad porcinaza (kg/m³)</label><input type="number" step="1" value="1000" id="p_rho"></div>
+        <div><label for="p_mexc">Producción de excretas (kg/CE·d)</label><input type="number" step="0.01" value="5.01" id="p_mexc"></div>
+        <div><label for="p_rho">Densidad de la porcinaza (kg/m³)</label><input type="number" step="1" value="1000" id="p_rho"></div>
         <div><label for="p_qalav">Agua de lavado (L/CE·d)</label><input type="number" step="0.1" value="12" id="p_qalav"></div>
-        <div><label for="p_redlav">Reducción agua lavado en CS (%)</label><input type="number" step="1" value="25" id="p_redlav"></div>
-        <div><label for="p_es_sep">Eficiencia separación L-S (%)</label><input type="number" step="1" value="55" id="p_es_sep"></div>
-        <div><label for="p_fsol">Fracción sólida excretas (%)</label><input type="number" step="1" value="55" id="p_fsol"></div>
+        <div><label for="p_redlav">Reducción del agua de lavado con separación (%)</label><input type="number" step="1" value="25" id="p_redlav"></div>
+        <div><label for="p_es_sep">Eficiencia de la separación sólido-líquido (%)</label><input type="number" step="1" value="55" id="p_es_sep"></div>
+        <div><label for="p_fsol">Fracción sólida de las excretas (%)</label><input type="number" step="1" value="55" id="p_fsol"></div>
       </div>
     </details>
   </section>

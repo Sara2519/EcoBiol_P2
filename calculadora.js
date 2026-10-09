@@ -95,22 +95,36 @@ function calculateAll(){
   var Q_A_lav = ce * Q_A_lavCE;
   var Q_exc = ce * M_exc / rho;
   var Q; // caudal total de diseño
+  // Filas de la tabla de caudales (nombres en lenguaje sencillo)
+  function filaCaudal(nombre, valor, nota, clase){
+    return '<tr'+(clase?' class="'+clase+'"':'')+'><th scope="row">'+nombre+(nota?'<small>'+nota+'</small>':'')+'</th>'
+         + '<td>'+fmt(valor,3)+' m³/d</td></tr>';
+  }
   var qcaudRows = '';
+  var cajaCaudal = document.getElementById('caudalResultados');
   if(esc==='SS'){
     Q = Q_exc + Q_A_lav;
-    qcaudRows += row('Caudal de excretas (Q_exc)', fmt(Q_exc,3), 'm³/d');
-    qcaudRows += row('Caudal de agua de lavado (Q_A.lav)', fmt(Q_A_lav,3), 'm³/d');
-    qcaudRows += row('Caudal de diseño (Q_SS)', fmt(Q,3), 'm³/d');
+    qcaudRows += filaCaudal('Caudal de excretas totales', Q_exc, 'Líquidas + sólidas');
+    qcaudRows += filaCaudal('Caudal de agua de lavado', Q_A_lav);
+    qcaudRows += filaCaudal('Caudal de diseño', Q, 'Total diario que llega al tratamiento', 'total');
+    cajaCaudal.className = 'caudal-resultados ss';
+    document.getElementById('caudalEscNombre').textContent = 'Sin separación (SS)';
+    document.getElementById('caudalEscTexto').textContent = 'La porcinaza ingresa directamente al tratamiento sin realizar una separación inicial de los sólidos.';
   } else {
     var Q_exc_liq = ce*M_exc/rho*(1-fsol);
     var Q_exc_sol = ce*M_exc/rho*fsol;
     var Q_exc_CS = Q_exc_liq + Q_exc_sol*(1-E_S);
-    Q = Q_exc_CS + (1-redLav)*Q_A_lav;
-    qcaudRows += row('Caudal de excretas líquidas', fmt(Q_exc_liq,3), 'm³/d');
-    qcaudRows += row('Caudal de excretas sólidas', fmt(Q_exc_sol,3), 'm³/d');
-    qcaudRows += row('Caudal de excretas CS', fmt(Q_exc_CS,3), 'm³/d');
-    qcaudRows += row('Caudal de agua de lavado (Q_A.lav)', fmt(Q_A_lav,3), 'm³/d');
-    qcaudRows += row('Caudal de diseño (Q_CS)', fmt(Q,3), 'm³/d');
+    var Q_A_lav_CS = (1-redLav)*Q_A_lav;
+    Q = Q_exc_CS + Q_A_lav_CS;
+    qcaudRows += filaCaudal('Caudal de excretas líquidas', Q_exc_liq);
+    qcaudRows += filaCaudal('Caudal de excretas sólidas', Q_exc_sol);
+    qcaudRows += filaCaudal('Excretas que continúan después de la separación', Q_exc_CS, 'Excretas líquidas + parte de los sólidos que no retiene el separador', 'destacada');
+    qcaudRows += filaCaudal('Caudal de agua de lavado', Q_A_lav_CS, 'Ajustado: con separación se usa '+fmt(redLav*100,0)+' % menos agua');
+    qcaudRows += filaCaudal('Caudal de diseño', Q, 'Total diario que llega al tratamiento', 'total');
+    cajaCaudal.className = 'caudal-resultados cs';
+    document.getElementById('caudalEscNombre').textContent = 'Con separación (CS)';
+    document.getElementById('caudalEscTexto').textContent = 'La porcinaza pasa primero por un sistema de separación sólido-líquido. Una parte de los sólidos es retirada y la fracción restante continúa hacia el tratamiento.';
+    document.getElementById('solidosRetirados').textContent = '(aproximadamente '+fmt(Q_exc_sol*E_S,3)+' m³/d)';
   }
   setTable('tbl_caudal', qcaudRows);
 
