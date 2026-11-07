@@ -94,7 +94,7 @@ function etiqueta(id, l1, l2){
 function abrirResumen(){
   calculateAll();
   var R = RESUMEN, cs = (R.esc==='CS');
-  document.getElementById('resumenEsc').textContent = cs ? 'Con separación (CS)' : 'Sin separación (SS)';
+  document.getElementById('resumenEsc').textContent = cs ? 'con separación (CS)' : 'sin separación (SS)';
   document.getElementById('resumenCE').textContent = fmt(R.ce,0)+' CE';
   document.getElementById('resumenQ').textContent = fmt(R.Q,3)+' m³/d';
   document.getElementById('planoResumenCS').style.display = cs ? '' : 'none';
