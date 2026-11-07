@@ -237,7 +237,7 @@ function calculateAll(){
     qcaudRows += filaCaudal('Caudal de agua de lavado', Q_A_lav);
     qcaudRows += filaCaudal('Caudal de diseño', Q, 'Total diario que llega al tratamiento', 'total');
     cajaCaudal.className = 'caudal-resultados ss';
-    document.getElementById('caudalEscNombre').textContent = 'Sin separación (SS)';
+    document.getElementById('caudalEscNombre').textContent = 'sin separación (SS)';
     document.getElementById('caudalEscTexto').textContent = 'La porcinaza ingresa directamente al tratamiento sin realizar una separación inicial de los sólidos.';
   } else {
     var Q_exc_liq = ce*M_exc/rho*(1-fsol);
