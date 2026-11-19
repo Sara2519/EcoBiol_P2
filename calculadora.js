@@ -567,12 +567,10 @@ function prepararPlanos(){
       var w = vb[2], h = vb[3], s = w/2000, banda = 120*s;
       svg.setAttribute('viewBox', '0 0 '+w+' '+(h+banda));
 
-      // Marca de agua (detrás de las cotas)
-      var lw = 560*s;
+      // Marca de agua: solo el logo (ya incluye la palabra ECOBIOL), centrado y detrás de las cotas
+      var lw = 640*s;
       var marca = svgEl('g', {'class':'marca-agua', 'opacity':'0.10', 'pointer-events':'none'});
-      marca.appendChild(svgEl('image', {href:'logo-ecobiol.png', x:(w-lw)/2, y:(h-lw)/2 - 50*s, width:lw, height:lw}));
-      marca.appendChild(svgEl('text', {x:w/2, y:(h+lw)/2 + 50*s, 'text-anchor':'middle',
-        'font-family':'Poppins, Arial, sans-serif', 'font-weight':'700', 'font-size':120*s, fill:'#335335'}, 'ECOBIOL'));
+      marca.appendChild(svgEl('image', {href:'logo-ecobiol.png', x:(w-lw)/2, y:(h-lw)/2, width:lw, height:lw}));
       var base = svg.querySelector('image');
       base.parentNode.insertBefore(marca, base.nextSibling);
 
