@@ -12,6 +12,8 @@
 </head>
 <body class="pagina-portada">
 
+  <button type="button" class="portada__creditos-btn" onclick="document.getElementById('creditos').showModal()">Créditos</button>
+
   <main class="portada">
 
     <h1 class="portada__titulo">Dimensiona el tratamiento de porcinaza de tu granja</h1>
@@ -30,6 +32,56 @@
     </p>
 
   </main>
+
+  <!-- ================= CRÉDITOS =================
+       Para agregar una persona, copia una línea <li> dentro del grupo que corresponda
+       y cambia el nombre y el rol. Si un grupo no aplica, borra toda su <section>. -->
+  <dialog class="creditos" id="creditos" aria-labelledby="creditosTitulo">
+    <div class="creditos__cab">
+      <h2 id="creditosTitulo">Créditos</h2>
+      <button type="button" class="creditos__cerrar" onclick="this.closest('dialog').close()" aria-label="Cerrar créditos">✕</button>
+    </div>
+    <div class="creditos__cuerpo">
+      <p>ECOBIOL fue construida gracias al trabajo de:</p>
+
+      <section class="creditos__grupo">
+        <h3>Desarrollo de la herramienta</h3>
+        <ul>
+          <li><b>[Nombre completo]</b><span>[Rol] · [Institución]</span></li>
+        </ul>
+      </section>
+
+      <section class="creditos__grupo">
+        <h3>Dirección y asesoría técnica</h3>
+        <ul>
+          <li><b>[Nombre completo]</b><span>[Rol] · [Institución]</span></li>
+        </ul>
+      </section>
+
+      <section class="creditos__grupo">
+        <h3>Diseño gráfico e ilustraciones</h3>
+        <ul>
+          <li><b>[Nombre completo]</b><span>[Rol] · [Institución]</span></li>
+        </ul>
+      </section>
+
+      <section class="creditos__grupo">
+        <h3>Instituciones participantes</h3>
+        <ul>
+          <li><b>[Nombre de la institución]</b><span>[Participación]</span></li>
+        </ul>
+      </section>
+
+      <p class="creditos__version">ECOBIOL · Versión 1.0 · 2026</p>
+    </div>
+  </dialog>
+
+  <script>
+    // Cierra los créditos al hacer clic fuera del recuadro
+    document.getElementById('creditos').addEventListener('click', function(e){
+      if(e.target === this) this.close();
+    });
+  </script>
 
 </body>
 </html>

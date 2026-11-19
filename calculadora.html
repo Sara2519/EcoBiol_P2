@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css?v=12">
+<link rel="stylesheet" href="estilos.css?v=13">
 </head>
 <body class="pagina-calc">
 
@@ -132,6 +132,12 @@
         <h2>Población porcina</h2>
         <p class="sub">Ingresa el número de animales por grupo. Con esta información se calcula el número de cerdos equivalentes (CE), que es la unidad base para el dimensionamiento del sistema de tratamiento.</p>
       </div>
+    </div>
+
+    <div class="campo-granja">
+      <label for="nombre_granja">Nombre de la granja</label>
+      <input type="text" id="nombre_granja" maxlength="60" placeholder="Ej.: Granja La Esperanza" autocomplete="off">
+      <small>Este nombre aparecerá en los planos y en el resumen que puedes descargar.</small>
     </div>
 
     <div class="grupo-animales reproduccion">
@@ -647,6 +653,11 @@
         </div>
       </div>
 
+      <div class="veredicto veredicto--alerta advertencia-cultivo solo-otro" role="note">
+        <span class="veredicto__ico" aria-hidden="true">!</span>
+        <p><b>Importante:</b> el biol no se puede aplicar en cultivos de alimentos para consumo humano directo, como hortalizas, frutas, tubérculos o plantas aromáticas que se consumen frescas. Utilízalo solo en pastos, forrajes y cultivos no alimenticios.</p>
+      </div>
+
       <div class="resultados-aplicacion">
         <div class="resultados-aplicacion__titulo">
           <span class="gota" aria-hidden="true">
@@ -1025,6 +1036,7 @@
       <button type="button" class="close-lb no-imprimir" onclick="cerrarPlano(null, 'resumen')" aria-label="Cerrar resumen">✕</button>
     </div>
     <div class="resumen__datos">
+      <div><span>Granja</span><b id="resumenGranja">—</b></div>
       <div><span>Escenario</span><b id="resumenEsc">—</b></div>
       <div><span>Población</span><b id="resumenCE">—</b></div>
       <div><span>Caudal de diseño</span><b id="resumenQ">—</b></div>
@@ -1048,9 +1060,6 @@
         <tbody id="tbl_resumen"></tbody>
       </table>
     </div>
-    <div class="resumen__acciones no-imprimir">
-      <button type="button" class="nav-btn" onclick="window.print()">Imprimir o guardar en PDF</button>
-    </div>
   </div>
 </div>
 
@@ -1064,6 +1073,6 @@
 </footer>
 
 
-<script src="calculadora.js?v=12"></script>
+<script src="calculadora.js?v=13"></script>
 </body>
 </html>

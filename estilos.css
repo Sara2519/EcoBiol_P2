@@ -372,6 +372,39 @@ body.pagina-portada{
 }
 @media (prefers-reduced-motion:reduce){ .portada__boton{transition:none;} }
 
+/* Créditos (pestaña de la portada) */
+.portada__creditos-btn{
+  position:fixed;top:18px;right:18px;z-index:5;
+  padding:10px 22px;border-radius:999px;cursor:pointer;
+  background:#fff;color:var(--portada-verde-oscuro);border:2px solid var(--portada-verde-oscuro);
+  font-family:'Poppins','Segoe UI',Arial,sans-serif;font-weight:700;font-size:1rem;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);transition:background .15s, color .15s;
+}
+.portada__creditos-btn:hover{background:var(--portada-verde-oscuro);color:#fff;}
+.portada__creditos-btn:focus-visible{outline:3px solid var(--portada-verde-claro);outline-offset:3px;}
+.creditos{
+  border:none;border-radius:18px;padding:0;
+  width:min(720px,calc(100% - 32px));max-height:85vh;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);color:var(--portada-texto);
+}
+.creditos::backdrop{background:rgba(20,22,18,.6);}
+.creditos__cab{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 26px;background:var(--portada-verde-oscuro);color:#fff;}
+.creditos__cab h2{font-family:'Poppins','Segoe UI',Arial,sans-serif;font-size:1.5rem;margin:0;}
+.creditos__cerrar{flex:0 0 auto;width:40px;height:40px;border:none;border-radius:50%;background:#fff;color:var(--portada-texto);font-size:18px;cursor:pointer;}
+.creditos__cuerpo{padding:8px 26px 26px;overflow:auto;max-height:calc(85vh - 76px);}
+.creditos__cuerpo > p{margin:16px 0 0;}
+.creditos__grupo h3{
+  font-family:'Poppins','Segoe UI',Arial,sans-serif;font-size:1rem;color:var(--portada-verde-oscuro);
+  text-transform:uppercase;letter-spacing:.04em;margin:22px 0 6px;
+}
+.creditos__grupo ul{list-style:none;margin:0;padding:0;}
+.creditos__grupo li{padding:9px 0;border-bottom:1px solid #E3E0D4;}
+.creditos__grupo li:last-child{border-bottom:none;}
+.creditos__grupo li b{display:block;font-size:1.05rem;}
+.creditos__grupo li span{color:#5B6259;font-size:.95rem;}
+.creditos__version{margin-top:22px !important;font-size:.9rem;color:#5B6259;}
+@media (max-width:600px){ .portada__creditos-btn{top:12px;right:12px;padding:8px 16px;font-size:.9rem;} }
+
 /* =========================================================
    Paso 2 — Población porcina
    ========================================================= */
@@ -781,15 +814,49 @@ details.adv .grid > div{display:flex;flex-direction:column;justify-content:flex-
 .tabla-resumen td:last-child{text-align:left;color:var(--text-muted);font-size:14px;}
 .resumen__acciones{display:flex;justify-content:flex-end;margin-top:16px;}
 
+/* Impresión / PDF: imprime el plano que esté abierto (cualquier unidad o el resumen) */
 @media print{
-  body > *:not(#resumen){display:none !important;}
-  #resumen{display:block !important;position:static;background:#fff;padding:0;}
-  #resumen .plano-modal__hoja{max-height:none;overflow:visible;width:100%;padding:0;box-shadow:none;}
-  #resumen .plano-modal__lienzo{overflow:visible;}
-  #resumen .plano-svg{width:100% !important;height:auto;max-height:150mm;}
-  #resumen .plano-svg[style*="none"]{display:none !important;}
+  body:has(.plano-modal.open) > *:not(.plano-modal.open){display:none !important;}
+  .plano-modal.open{display:block !important;position:static;background:#fff;padding:0;}
+  .plano-modal.open .plano-modal__hoja{max-height:none;overflow:visible;width:100%;padding:0;box-shadow:none;}
+  .plano-modal.open .plano-modal__lienzo{overflow:visible;}
+  .plano-modal.open .plano-svg{width:100% !important;height:auto;max-height:170mm;}
+  #resumen .plano-svg{max-height:150mm;}
+  .plano-modal.open .plano-svg[style*="none"]{display:none !important;}
   @page{size:A4 landscape;margin:10mm;}
-  .no-imprimir,.plano-modal__pista{display:none !important;}
+  .no-imprimir,.plano-modal__pista,.close-lb{display:none !important;}
 }
+
+/* Botones de descarga en los planos */
+.plano-modal__acciones{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:12px;margin-top:14px;}
+.btn-descarga{
+  padding:12px 24px;border:none;border-radius:999px;cursor:pointer;
+  background:linear-gradient(90deg,var(--verde-oscuro),var(--verde-claro));
+  color:#fff;font-family:var(--f-titulo);font-size:clamp(14px,1.3vw,17px);font-weight:700;
+  transition:transform .15s, box-shadow .15s;
+}
+.btn-descarga--sec{background:var(--surface);color:var(--green);border:2px solid var(--green);}
+.btn-descarga:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 14px rgba(67,99,46,.25);}
+.btn-descarga:disabled{opacity:.6;cursor:progress;}
+.btn-descarga:focus-visible{outline:3px solid var(--verde-claro);outline-offset:3px;}
+@media (max-width:600px){ .btn-descarga{width:100%;} }
+
+/* Paso 2 — Nombre de la granja */
+.campo-granja{
+  max-width:1160px;margin:clamp(24px,3vw,40px) auto 0;
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;
+  padding:16px 20px;border-radius:10px;background:var(--green-light);
+}
+.campo-granja label{font-family:var(--f-texto);font-size:clamp(17px,1.5vw,21px);font-weight:700;color:var(--green);margin:0;}
+.campo-granja input{
+  flex:1 1 280px;min-width:0;
+  font-family:var(--f-texto);font-size:18px;padding:10px 14px;
+  background:#fff;color:var(--text);border:1px solid #D9DCD6;border-radius:8px;
+}
+.campo-granja input:focus{outline:2px solid var(--verde-claro);outline-offset:1px;}
+.campo-granja small{flex-basis:100%;font-size:14px;color:var(--text-muted);}
+
+/* Paso 7 — Advertencia al elegir "Otro cultivo" */
+.veredicto.advertencia-cultivo{margin:16px 0 0;max-width:1000px;}
 .tag-res tspan.l2{font-weight:400;fill:#20241F;}
 .caudal-terciario{margin:14px 0 0 clamp(0px,6.5vw,96px);padding:10px 14px;border-radius:6px;background:var(--teal-light);color:#1F4F57;font-size:clamp(14px,1.3vw,17px);max-width:1040px;}

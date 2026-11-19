@@ -1,5 +1,5 @@
 function num(id){ var v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; }
-function fmt(v,d){ if(d===undefined) d=2; if(!isFinite(v)) return '—'; return v.toLocaleString('es-CO',{minimumFractionDigits:0,maximumFractionDigits:d}); }
+function fmt(v,d){ if(d===undefined) d=2; if(!isFinite(v)) return '—'; return v.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d}); } // siempre el mismo número de decimales (2,00 · 2,50)
 function row(k,v,unit){ return '<tr><td class="k">'+k+'</td><td class="v">'+v+(unit?' '+unit:'')+'</td></tr>'; }
 function setTable(id, html){ document.getElementById(id).innerHTML = html; }
 
@@ -94,6 +94,7 @@ function etiqueta(id, l1, l2){
 function abrirResumen(){
   calculateAll();
   var R = RESUMEN, cs = (R.esc==='CS');
+  document.getElementById('resumenGranja').textContent = nombreGranja() || 'Sin nombre registrado';
   document.getElementById('resumenEsc').textContent = cs ? 'con separación (CS)' : 'sin separación (SS)';
   document.getElementById('resumenCE').textContent = fmt(R.ce,0)+' CE';
   document.getElementById('resumenQ').textContent = fmt(R.Q,3)+' m³/d';
@@ -107,15 +108,15 @@ function abrirResumen(){
   var apTxt = R.ap.cultivo+' · '+fmt(R.ap.A,2)+' ha/año';
   var pre = cs ? 'rc_' : 'rs_';
   etiqueta(pre+'tr', 'V '+fmt(R.tr.V,2)+' m³', x(R.tr.L,R.tr.B));
-  etiqueta(pre+'ls', 'A '+fmt(R.ls.A,1)+' m²', x(R.ls.L,R.ls.B));
-  if(R.bd.varios){ etiqueta(pre+'bd', 'V '+fmt(R.bd.V,1)+' m³', fmt(R.bd.N,0)+' biodigestores de '+fmt(R.bd.LR,0)+' m'); }
-  else { etiqueta(pre+'bd', 'V '+fmt(R.bd.V,1)+' m³', 'Largo '+fmt(R.bd.L,2)+' m · zanja '+fmt(R.bd.Bsup,1)+' m'); }
+  etiqueta(pre+'ls', 'A '+fmt(R.ls.A,2)+' m²', x(R.ls.L,R.ls.B));
+  if(R.bd.varios){ etiqueta(pre+'bd', 'V '+fmt(R.bd.V,2)+' m³', fmt(R.bd.N,0)+' biodigestores de '+fmt(R.bd.LR,2)+' m'); }
+  else { etiqueta(pre+'bd', 'V '+fmt(R.bd.V,2)+' m³', 'Largo '+fmt(R.bd.L,2)+' m · zanja '+fmt(R.bd.Bsup,2)+' m'); }
   etiqueta(pre+'tb', 'V '+fmt(R.tb.V,2)+' m³', x(R.tb.L,R.tb.B));
-  etiqueta(pre+'tt', R.tt ? R.tt.sigla+' · A '+fmt(R.tt.A,1)+' m² · '+x(R.tt.L,R.tt.B) : 'No requerido');
+  etiqueta(pre+'tt', R.tt ? R.tt.sigla+' · A '+fmt(R.tt.A,2)+' m² · '+x(R.tt.L,R.tt.B) : 'No requerido');
   etiqueta(pre+'ap', R.ap.cultivo+' · '+fmt(R.ap.A,2)+' ha/año');
   if(cs){
-    etiqueta('rc_ms', 'A '+fmt(R.ms.A,1)+' m² · '+x(R.ms.L,R.ms.B));
-    etiqueta('rc_cp', fmt(R.cp.N,0)+' pilas de '+x(R.cp.L,R.cp.B), 'Área total '+fmt(R.cp.At,1)+' m²');
+    etiqueta('rc_ms', 'A '+fmt(R.ms.A,2)+' m² · '+x(R.ms.L,R.ms.B));
+    etiqueta('rc_cp', fmt(R.cp.N,0)+' pilas de '+x(R.cp.L,R.cp.B), 'Área total '+fmt(R.cp.At,2)+' m²');
   }
 
   // Tabla resumen
@@ -398,8 +399,8 @@ function calculateAll(){
     filasBio += '<tr class="fila-destacada"><th scope="row">N.° de biodigestores de '+fmt(L_R,0)+' m</th><td><b>'+fmt(N_B,0)+'</b> '+(N_B===1?'unidad':'unidades')+'</td></tr>';
     notaBio.textContent = 'El largo calculado se acerca o supera el largo comercial de '+fmt(L_R,0)+' m, por eso se recomienda instalar '+fmt(N_B,0)+(N_B===1?' biodigestor':' biodigestores')+' de '+fmt(L_R,0)+' m.';
     notaBio.style.display = '';
-    document.getElementById('plb_largo').textContent = 'Largo: '+fmt(L_R,0)+' m (cada uno)';
-    document.getElementById('plb_num').textContent = 'Biodigestores de '+fmt(L_R,0)+' m: '+fmt(N_B,0);
+    document.getElementById('plb_largo').textContent = 'Largo: '+fmt(L_R,2)+' m (cada uno)';
+    document.getElementById('plb_num').textContent = 'Biodigestores de '+fmt(L_R,2)+' m: '+fmt(N_B,0);
   } else {
     filasBio += filaDim('Largo', L_B, 'm');
     notaBio.style.display = 'none';
@@ -525,6 +526,8 @@ function calculateAll(){
   document.getElementById('caudalTerciario').innerHTML = 'Caudal de biol que va a tratamiento terciario: <b>'+fmt(Q_TT,3)+' m³/d</b>'
     + (haDisp>0 ? ' (excedente que no se alcanza a asperjar en las '+fmt(haDisp,2)+' ha disponibles; se asperjan '+fmt(Q_B-Q_TT,3)+' m³/d).' : ' (no hay área disponible para asperjar).');
 
+  actualizarRotulos();
+
   // --- Datos para el resumen final ---
   RESUMEN = {
     esc: esc, ce: ce, Q: Q,
@@ -539,11 +542,149 @@ function calculateAll(){
   };
 }
 
+// =========================================================
+// Planos: nombre de la granja, rótulo, marca de agua y descarga
+// =========================================================
+var SVGNS = 'http://www.w3.org/2000/svg';
+function nombreGranja(){ var el = document.getElementById('nombre_granja'); return el ? el.value.trim() : ''; }
+function svgEl(tag, attrs, txt){
+  var e = document.createElementNS(SVGNS, tag);
+  for(var k in attrs){ e.setAttribute(k, attrs[k]); }
+  if(txt !== undefined) e.textContent = txt;
+  return e;
+}
+
+// Agrega a cada plano una franja inferior (rótulo) y la marca de agua de ECOBIOL
+function prepararPlanos(){
+  var fecha = new Date().toLocaleDateString('es-CO', {day:'numeric', month:'long', year:'numeric'});
+  document.querySelectorAll('.plano-modal').forEach(function(modal){
+    var svgs = modal.querySelectorAll('svg.plano-svg');
+    if(!svgs.length) return;
+    var titulo = modal.querySelector('.plano-modal__barra h2').textContent.trim();
+
+    svgs.forEach(function(svg){
+      var vb = svg.getAttribute('viewBox').split(/\s+/).map(Number);
+      var w = vb[2], h = vb[3], s = w/2000, banda = 120*s;
+      svg.setAttribute('viewBox', '0 0 '+w+' '+(h+banda));
+
+      // Marca de agua (detrás de las cotas)
+      var lw = 560*s;
+      var marca = svgEl('g', {'class':'marca-agua', 'opacity':'0.10', 'pointer-events':'none'});
+      marca.appendChild(svgEl('image', {href:'logo-ecobiol.png', x:(w-lw)/2, y:(h-lw)/2 - 50*s, width:lw, height:lw}));
+      marca.appendChild(svgEl('text', {x:w/2, y:(h+lw)/2 + 50*s, 'text-anchor':'middle',
+        'font-family':'Poppins, Arial, sans-serif', 'font-weight':'700', 'font-size':120*s, fill:'#335335'}, 'ECOBIOL'));
+      var base = svg.querySelector('image');
+      base.parentNode.insertBefore(marca, base.nextSibling);
+
+      // Rótulo
+      var ff = 'Lato, Arial, sans-serif', y0 = h + 10*s, alto = banda - 20*s;
+      var t1 = y0 + alto*0.45, t2 = y0 + alto*0.84;
+      var g = svgEl('g', {'class':'rotulo'});
+      g.appendChild(svgEl('rect', {x:10*s, y:y0, width:w-20*s, height:alto, rx:14*s, fill:'#F1F4EB', stroke:'#9DB89A', 'stroke-width':2*s}));
+      g.appendChild(svgEl('text', {x:40*s, y:t1, 'font-family':'Poppins, Arial, sans-serif', 'font-weight':'700', 'font-size':40*s, fill:'#335335'}, 'ECOBIOL'));
+      g.appendChild(svgEl('text', {x:40*s, y:t2, 'font-family':ff, 'font-size':24*s, fill:'#5B6259'}, 'Dimensionamiento del tratamiento de porcinaza'));
+      g.appendChild(svgEl('text', {x:w/2, y:t1, 'text-anchor':'middle', 'font-family':ff, 'font-size':24*s, fill:'#5B6259'}, 'Granja'));
+      g.appendChild(svgEl('text', {x:w/2, y:t2, 'text-anchor':'middle', 'font-family':ff, 'font-weight':'700', 'font-size':34*s, fill:'#20241F', 'class':'rotulo-granja'}, '—'));
+      g.appendChild(svgEl('text', {x:w-40*s, y:t1, 'text-anchor':'end', 'font-family':ff, 'font-weight':'700', 'font-size':28*s, fill:'#2F5233'}, titulo));
+      g.appendChild(svgEl('text', {x:w-40*s, y:t2, 'text-anchor':'end', 'font-family':ff, 'font-size':24*s, fill:'#5B6259'}, fecha));
+      svg.appendChild(g);
+    });
+
+    // Botones de descarga e impresión
+    var hoja = modal.querySelector('.plano-modal__hoja');
+    var acc = document.createElement('div');
+    acc.className = 'plano-modal__acciones no-imprimir';
+    acc.innerHTML = '<button type="button" class="btn-descarga" onclick="descargarPlano(\''+modal.id+'\', this)">Descargar plano (imagen)</button>'
+                  + '<button type="button" class="btn-descarga btn-descarga--sec" onclick="window.print()">Imprimir o guardar en PDF</button>';
+    hoja.appendChild(acc);
+  });
+}
+
+function actualizarRotulos(){
+  var n = nombreGranja();
+  if(n.length > 45) n = n.slice(0, 44)+'…';
+  document.querySelectorAll('.rotulo-granja').forEach(function(t){ t.textContent = n || 'Sin nombre registrado'; });
+}
+
+// Reglas de estilo de las cotas, para que la imagen descargada se vea igual que en pantalla
+var CSS_PLANOS = null;
+function cssPlanos(){
+  if(CSS_PLANOS !== null) return CSS_PLANOS;
+  var txt = '';
+  Array.prototype.forEach.call(document.styleSheets, function(hoja){
+    var reglas; try{ reglas = hoja.cssRules; }catch(e){ return; }
+    Array.prototype.forEach.call(reglas, function(r){
+      if(r.selectorText && /plano-cotas|plano-resumen|tag-res/.test(r.selectorText)) txt += r.cssText+'\n';
+    });
+  });
+  txt = txt.replace(/var\(--f-texto\)/g, "'Lato', Arial, sans-serif").replace(/var\(--f-titulo\)/g, "'Poppins', Arial, sans-serif");
+  return (CSS_PLANOS = txt);
+}
+function aDataURL(url){
+  return fetch(url).then(function(r){ if(!r.ok) throw new Error(url); return r.blob(); })
+    .then(function(b){ return new Promise(function(ok, mal){
+      var fr = new FileReader(); fr.onload = function(){ ok(fr.result); }; fr.onerror = mal; fr.readAsDataURL(b);
+    }); });
+}
+function nombreArchivo(t){
+  return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+}
+
+function descargarPlano(modalId, btn){
+  var modal = document.getElementById(modalId);
+  var svg = Array.prototype.filter.call(modal.querySelectorAll('svg.plano-svg'), function(x){ return x.style.display !== 'none'; })[0];
+  var vb = svg.getAttribute('viewBox').split(/\s+/).map(Number);
+  var esc = 2400/vb[2];                       // imagen de 2400 px de ancho
+  var W = Math.round(vb[2]*esc), H = Math.round(vb[3]*esc);
+
+  var copia = svg.cloneNode(true);
+  copia.setAttribute('xmlns', SVGNS);
+  copia.setAttribute('width', W); copia.setAttribute('height', H);
+  copia.removeAttribute('style');
+  var estilo = svgEl('style', {}); estilo.textContent = cssPlanos();
+  copia.insertBefore(estilo, copia.firstChild);
+
+  var txtBtn = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Preparando…';
+
+  Promise.all(Array.prototype.map.call(copia.querySelectorAll('image'), function(im){
+    return aDataURL(im.getAttribute('href')).then(function(d){ im.setAttribute('href', d); });
+  })).then(function(){
+    var url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(copia)], {type:'image/svg+xml;charset=utf-8'}));
+    return new Promise(function(ok, mal){
+      var img = new Image();
+      img.onload = function(){
+        var c = document.createElement('canvas'); c.width = W; c.height = H;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+        ctx.drawImage(img, 0, 0, W, H);
+        URL.revokeObjectURL(url);
+        c.toBlob(function(b){ b ? ok(b) : mal(); }, 'image/png');
+      };
+      img.onerror = mal;
+      img.src = url;
+    });
+  }).then(function(blob){
+    var titulo = modal.querySelector('.plano-modal__barra h2').textContent;
+    var granja = nombreGranja();
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = nombreArchivo('ecobiol '+titulo+(granja ? ' '+granja : ''))+'.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 3000);
+  }).catch(function(){
+    alert('No fue posible descargar el plano. La descarga funciona desde la página publicada (GitHub Pages), no al abrir el archivo directamente desde el computador.');
+  }).then(function(){
+    btn.disabled = false; btn.textContent = txtBtn;
+  });
+}
+
 document.querySelectorAll('input, select').forEach(function(el){
   el.addEventListener('input', calculateAll);
   el.addEventListener('change', calculateAll);
 });
 
+prepararPlanos();
 actualizarBloqueSeparacion();
 calculateAll();
 renderSteps();
