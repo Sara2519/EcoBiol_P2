@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Lato:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css?v=14">
+<link rel="stylesheet" href="estilos.css?v=15">
 </head>
 <body class="pagina-calc">
 
@@ -224,6 +224,26 @@
       <div class="caja-borde">
         <h3>¿Por qué cambia el caudal?</h3>
         <p>Cuando se realiza la separación sólido-líquido, una parte de los sólidos se retira antes del tratamiento de la fracción líquida. Por esto, el caudal que continúa hacia las unidades de tratamiento es menor que en el escenario sin separación.</p>
+      </div>
+    </div>
+
+    <div class="origen-caudal">
+      <h3>¿Cómo quieres obtener el caudal de diseño?</h3>
+      <div class="origen-caudal__opciones">
+        <label class="opcion-caudal">
+          <input type="radio" name="origen_q" value="calc" id="q_calc" checked>
+          <span><b>Calcularlo con la población porcina</b><small>Se estima con los cerdos equivalentes (CE) y el agua de lavado.</small></span>
+        </label>
+        <label class="opcion-caudal">
+          <input type="radio" name="origen_q" value="med" id="q_med">
+          <span><b>Usar el caudal medido en mi granja</b><small>Si ya mediste el volumen de porcinaza que se genera cada día.</small></span>
+        </label>
+      </div>
+      <div class="campo campo-q-medido" id="campoQMedido" hidden>
+        <label for="q_medido">Caudal medido en la granja</label>
+        <div class="campo-unidad"><input type="number" step="0.01" min="0" value="0" id="q_medido"><span>m³/d</span></div>
+        <small class="campo__ayuda">Corresponde a la porcinaza y el agua de lavado que llegan al tratamiento en un día, medidos a la entrada del tanque de recepción (si usas separación, después del separador).</small>
+        <p class="aviso-q" id="avisoQ" hidden></p>
       </div>
     </div>
 
@@ -1073,6 +1093,6 @@
 </footer>
 
 
-<script src="calculadora.js?v=14"></script>
+<script src="calculadora.js?v=15"></script>
 </body>
 </html>

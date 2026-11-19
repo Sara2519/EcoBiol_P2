@@ -97,7 +97,7 @@ function abrirResumen(){
   document.getElementById('resumenGranja').textContent = nombreGranja() || 'Sin nombre registrado';
   document.getElementById('resumenEsc').textContent = cs ? 'con separación (CS)' : 'sin separación (SS)';
   document.getElementById('resumenCE').textContent = fmt(R.ce,0)+' CE';
-  document.getElementById('resumenQ').textContent = fmt(R.Q,3)+' m³/d';
+  document.getElementById('resumenQ').textContent = fmt(R.Q,3)+' m³/d'+(R.qMedido ? ' (medido)' : '');
   document.getElementById('planoResumenCS').style.display = cs ? '' : 'none';
   document.getElementById('planoResumenSS').style.display = cs ? 'none' : '';
   abrirPlano('resumen');
@@ -236,7 +236,6 @@ function calculateAll(){
     Q = Q_exc + Q_A_lav;
     qcaudRows += filaCaudal('Caudal de excretas totales', Q_exc, 'Líquidas + sólidas');
     qcaudRows += filaCaudal('Caudal de agua de lavado', Q_A_lav);
-    qcaudRows += filaCaudal('Caudal de diseño', Q, 'Total diario que llega al tratamiento', 'total');
     cajaCaudal.className = 'caudal-resultados ss';
     document.getElementById('caudalEscNombre').textContent = 'sin separación (SS)';
     document.getElementById('caudalEscTexto').textContent = 'La porcinaza ingresa directamente al tratamiento sin realizar una separación inicial de los sólidos.';
@@ -250,11 +249,34 @@ function calculateAll(){
     qcaudRows += filaCaudal('Caudal de excretas sólidas', Q_exc_sol);
     qcaudRows += filaCaudal('Excretas que continúan después de la separación', Q_exc_CS, 'Excretas líquidas + parte de los sólidos que no retiene el separador', 'destacada');
     qcaudRows += filaCaudal('Caudal de agua de lavado', Q_A_lav_CS, 'Ajustado: con separación se usa '+fmt(redLav*100,0)+' % menos agua');
-    qcaudRows += filaCaudal('Caudal de diseño', Q, 'Total diario que llega al tratamiento', 'total');
     cajaCaudal.className = 'caudal-resultados cs';
     document.getElementById('caudalEscNombre').textContent = 'Con separación (CS)';
     document.getElementById('caudalEscTexto').textContent = 'La porcinaza pasa primero por un sistema de separación sólido-líquido. Una parte de los sólidos es retirada y la fracción restante continúa hacia el tratamiento.';
     document.getElementById('solidosRetirados').textContent = '(aproximadamente '+fmt(Q_exc_sol*E_S,3)+' m³/d)';
+  }
+  // Caudal medido por el productor (m³/d): si se ingresa, reemplaza al calculado en todos los cálculos
+  var usarMedido = document.getElementById('q_med').checked;
+  var Q_med = num('q_medido');
+  var Q_calc = Q;
+  var aviso = document.getElementById('avisoQ');
+  document.getElementById('campoQMedido').hidden = !usarMedido;
+  aviso.hidden = true;
+  var qMedidoActivo = usarMedido && Q_med > 0;
+  if(qMedidoActivo){
+    qcaudRows += filaCaudal('Caudal estimado con la población', Q_calc, 'Solo como referencia', 'destacada');
+    Q = Q_med;
+    qcaudRows += filaCaudal('Caudal de diseño', Q, 'Medido en la granja — se usa en todos los cálculos', 'total');
+    var razon = Q_calc > 0 ? Q_med/Q_calc : 0;
+    if(razon > 1.5 || (razon > 0 && razon < 0.67)){
+      aviso.hidden = false;
+      aviso.textContent = 'El caudal medido es '+fmt(razon,2)+' veces el estimado con la población ('+fmt(Q_calc,3)+' m³/d). Verifica la medición o el número de animales.';
+    }
+  } else {
+    if(usarMedido){
+      aviso.hidden = false;
+      aviso.textContent = 'Ingresa el caudal medido. Mientras tanto, los cálculos usan el caudal estimado con la población.';
+    }
+    qcaudRows += filaCaudal('Caudal de diseño', Q, 'Total diario que llega al tratamiento', 'total');
   }
   setTable('tbl_caudal', qcaudRows);
 
@@ -530,7 +552,7 @@ function calculateAll(){
 
   // --- Datos para el resumen final ---
   RESUMEN = {
-    esc: esc, ce: ce, Q: Q,
+    esc: esc, ce: ce, Q: Q, qMedido: qMedidoActivo,
     tr:  {V:V_TR, L:L_TR, B:B_TR, H:H_T_TR, Ht:H_tolva},
     bd:  {V:V_B, L:L_B, N:N_B, varios:variosBio, LR:L_R, Binf:B_inf, Bsup:B_sup, h:h_z},
     tb:  {V:V_TB, L:L_TB, B:B_TB, H:H_T_TB},
